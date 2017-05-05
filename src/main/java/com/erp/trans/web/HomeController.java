@@ -17,7 +17,7 @@ public class HomeController {
 	 * 首页
 	 * */
 	@RequestMapping("/index")
-	public String forwardIndex(){
+	public String index(){
 		return "index";
 	}
 	
@@ -25,7 +25,7 @@ public class HomeController {
 	 * home
 	 * */
 	@RequestMapping("/home")
-	public String forwardNews(HttpServletRequest request){
+	public String home(HttpServletRequest request){
 		return "home";
 	}
 	
@@ -33,7 +33,7 @@ public class HomeController {
 	 * 客户案例
 	 * */
 	@RequestMapping("/form")
-	public String forwardProducts(){
+	public String form(){
 		return "form";
 	}
 	
@@ -41,7 +41,7 @@ public class HomeController {
 	 * 医商云服务
 	 * */
 	@RequestMapping("/category_add")
-	public String forwardServices(){
+	public String category_add(){
 		return "category_add";
 	}
 	
