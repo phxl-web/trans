@@ -8,7 +8,7 @@ import com.erp.trans.common.entity.LoginoperInfo;
 
 /**
  * 日志DAO接口
- * @author Administrator
+ *
  *
  */
 public interface LogInfoMapper {

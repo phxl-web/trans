@@ -3,7 +3,7 @@ package com.erp.trans.common.constant;
 /**
  * MIME类型常量
  * @date: 2016年7月8日 下午10:41:16
- * @author 黄文君
+ *
  * @version 1.0
  * @since JDK 1.6
  */

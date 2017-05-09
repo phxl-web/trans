@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 数据库操作本地工具类
  * @date	2017年1月11日 上午10:25:05
- * @author	黄文君
+ *
  * @version	1.0
  * @since	JDK 1.6
  */
@@ -22,7 +22,7 @@ public class LocalDbUtils {
 	
 	/**
 	 * 关闭数据库资源
-	 * @author	黄文君
+	 *
 	 * @date	2017年1月9日 下午5:51:08
 	 * @param	connection
 	 * @param	statement
@@ -64,7 +64,7 @@ public class LocalDbUtils {
 	
 	/**
 	 * 关闭数据库资源
-	 * @author	黄文君
+	 *
 	 * @date	2017年1月10日 下午1:35:56
 	 * @param	closeable
 	 * @return	void

@@ -6,7 +6,7 @@ import org.springframework.util.Assert;
 
 /**
  * 复合主键结构实体定义（通用）
- * @author 黄文君
+ *
  * @version 1.0
  */
 public class CompoundID implements Serializable {

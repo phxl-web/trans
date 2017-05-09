@@ -4,7 +4,7 @@ import org.aspectj.lang.JoinPoint;
 
 /**
  * 系统日志服务层接口
- * @author Administrator
+ *
  *
  */
 public interface LogService {

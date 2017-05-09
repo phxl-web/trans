@@ -17,7 +17,7 @@ import com.erp.trans.common.web.BaseControllerSupport;
  * 请求响应标准报文数据结构处理
  * 
  * @date	2016年2月18日 下午2:42:48
- * @author	黄文君 
+ *
  * @version	1.1
  * @since	JDK 1.6
  */
@@ -76,7 +76,7 @@ public class ResResultBindingInterceptor extends HandlerInterceptorAdapter {
 	/**
 	 * 是否使用格式化json输出
 	 * 
-	 * @author	黄文君
+	 *
 	 * @param	prettyPrint
 	 * @return	void
 	 */

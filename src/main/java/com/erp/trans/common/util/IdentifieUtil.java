@@ -14,7 +14,7 @@ import java.util.UUID;
 /**
  * 生成ID、流水号等标识串常用工具类 <br/>
  * date: 2015年9月24日 上午11:32:11 <br/> 
- * @author 黄文君 
+ *
  * @version 1.0  
  * @since JDK 1.6
  */

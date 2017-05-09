@@ -20,7 +20,7 @@ import com.erp.trans.common.web.BaseControllerSupport;
 /**
  * 接口响应返回Json格式消息定义器重写扩展
  * @date	2016年2月3日 下午5:57:14
- * @author	黄文君 
+ *
  * @version	1.0
  * @since	JDK 1.6
  */

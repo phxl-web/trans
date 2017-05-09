@@ -3,7 +3,7 @@ package com.erp.trans.common.constant.ysynet;
 /**
  * [医商云]: 同步功能定义
  * @date	2016年4月12日 下午2:44:54
- * @author	黄文君
+ *
  * @version	1.0
  * @since	JDK 1.6
  */

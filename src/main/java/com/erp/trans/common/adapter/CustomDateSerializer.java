@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  * Reason: TODO ADD REASON(可选). <br/> 
  * date: 2016年2月20日 13:53:37 <br/> 
  * 
- * @author Chenjun 
+ *
  * @version  
  * @since JDK 1.6
  */

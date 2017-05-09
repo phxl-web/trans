@@ -143,8 +143,8 @@ import org.apache.log4j.spi.LoggingEvent;
  you want.
 
 
- @author Eirik Lygre
- @author Ceki G&uuml;lc&uuml;
+
+
  <br/> <br/>
 <b>Important Note:</b>
 This is modified version of <code>DailyRollingFileAppender</code>. I have just added <code>maxBackupIndex</code>. So, if your number of log files increased more than <code>maxBackupIndex</code> it will delete the older log files.

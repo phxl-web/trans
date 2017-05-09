@@ -24,7 +24,7 @@ import com.erp.trans.common.service.IBaseService;
  * 使用此方法还需要在上送实体类中增加相应注解@BaseSql(tableName="",resultName="")(必输)
  * 所有方法都会返回null或0 调用时需要做相应处理
  * date:2016.01.27
- * @author jzc
+ *
  * @version	1.0
  * */
 @Component

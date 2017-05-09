@@ -463,7 +463,7 @@ public class DateUtils {
 	
 	/**
 	 * 日期格式化字符串
-	 * @author	黄文君
+	 *
 	 * @date	2016年7月18日 下午3:56:12
 	 *
 	 * @param	date
@@ -475,7 +475,7 @@ public class DateUtils {
 	
 	/**
 	 * 日期格式化字符串
-	 * @author	黄文君
+	 *
 	 * @date	2016年7月18日 下午3:56:29
 	 *
 	 * @param	date
@@ -488,7 +488,7 @@ public class DateUtils {
 
 	/**
 	 * 日期字符串解析成日期对象
-	 * @author	黄文君
+	 *
 	 * @date	2016年7月18日 下午3:56:43
 	 *
 	 * @param	dateString
@@ -501,7 +501,7 @@ public class DateUtils {
 	
 	/**
 	 * 日期字符串解析成日期对象
-	 * @author	黄文君
+	 *
 	 * @date	2016年7月18日 下午3:56:58
 	 *
 	 * @param	dateString

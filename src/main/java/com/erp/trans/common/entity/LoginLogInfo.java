@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * 系统登录信息类
- * @author Administrator
+ *
  *
  */
 public class LoginLogInfo {

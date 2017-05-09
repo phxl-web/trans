@@ -58,7 +58,7 @@ import com.erp.trans.common.util.OrderComparator;
 /**
  * mybatis对oracle分页处理公共处理类（持续完善） <br/>
  * date: 2015年9月25日 下午5:39:03 <br/>
- * @author 黄文君
+ *
  * @version 1.0
  * @since JDK 1.6
  */

@@ -13,7 +13,7 @@ package com.erp.trans.common.constant.ysynet;
  * 常量定义类: 用于定义系统中用到的常量值或者码值（建议使用） <br/>
  * @date: 2015年9月25日 下午3:15:42 <br/> 
  * 
- * @author 黄文君
+ *
  * @version 1.0
  * @since JDK 1.6
  */
@@ -70,7 +70,7 @@ public class YsynetServiceConst {
      * 发票状态  <br/> 
      * date: 2016年2月16日 下午5:31:59 <br/> 
      * 
-     * @author 黄文君 
+     *
      * @version CustomConst 
      * @since JDK 1.6
      */
@@ -86,7 +86,7 @@ public class YsynetServiceConst {
     /**
      * 机构类型
      * @date: 2016年7月17日 下午1:15:29
-     * @author 黄文君
+     *
      * @version 1.0
      * @since JDK 1.6
      */
@@ -100,7 +100,7 @@ public class YsynetServiceConst {
     /**
      * 用户类型（所属机构）
      * @date: 2016年7月14日 上午9:54:09
-     * @author 黄文君
+     *
      * @version 1.0
      * @since JDK 1.6
      */
@@ -116,7 +116,7 @@ public class YsynetServiceConst {
     /**
      * 资质证件类型
      * @date: 2016年7月17日 上午2:35:20
-     * @author 黄文君
+     *
      * @version 1.0
      * @since JDK 1.6
      */
@@ -146,7 +146,7 @@ public class YsynetServiceConst {
     /**
      * 资质证件提醒类型
      * @date: 2016年7月29日 下午4:25:45
-     * @author 黄文君
+     *
      * @version 1.0
      * @since JDK 1.6
      */

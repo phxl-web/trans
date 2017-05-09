@@ -11,7 +11,7 @@ import org.apache.commons.beanutils.BeanUtils;
 /**
  * 集合工具类
  * 
- * @author Administrator
+ *
  *
  */
 public class CollectionsUtils {

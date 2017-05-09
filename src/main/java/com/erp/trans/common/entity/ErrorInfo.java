@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * 异常信息类
- * @author Administrator
+ *
  *
  */
 public class ErrorInfo {

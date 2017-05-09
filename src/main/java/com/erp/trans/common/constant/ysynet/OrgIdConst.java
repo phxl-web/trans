@@ -12,7 +12,7 @@ package com.erp.trans.common.constant.ysynet;
  * 【医商云库】标准机构id常量	<br/> 
  * date: 2016年1月8日 上午11:18:06 <br/> 
  * 
- * @author 黄文君 
+ *
  * @version  
  * @since JDK 1.6
  */

@@ -31,7 +31,7 @@ import com.erp.trans.common.util.JSONUtils;
 /**
  * 控制器支持类, 包含控制器需要的公用性较强的一些方法
  * @date	2015年9月22日 下午5:27:59
- * @author	黄文君 
+ *
  * @version 1.0 
  * @since	JDK 1.6
  */
@@ -101,7 +101,7 @@ public class BaseControllerSupport {
 	
 	/**
 	 * 初始化标准响应结构
-	 * @author	黄文君
+	 *
 	 * @date	2017年4月17日 下午2:01:47
 	 * @param	request
 	 * @throws	IOException

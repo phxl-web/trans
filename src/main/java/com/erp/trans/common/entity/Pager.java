@@ -21,7 +21,7 @@ import com.erp.trans.common.constant.SystemConst;
 /**
  * 分页信息实体Bean <br> 
  * @date	2015年9月24日 下午1:03:49 <br> 
- * @author	黄文君 
+ *
  * @version	1.0 
  * @since	JDK 1.6
  */
@@ -112,7 +112,7 @@ public class Pager<E> implements Serializable {
 	
 	/**
 	 * 设置每页记录数量（允许指定默认值）
-	 * @author	黄文君
+	 *
 	 * @date	2017年2月8日 下午3:47:36
 	 * @param	pageSize
 	 * @param	defaultPageSize
@@ -211,7 +211,7 @@ public class Pager<E> implements Serializable {
 	
 	/**
 	 * 获取查询参数  <br>
-	 * @author	黄文君
+	 *
 	 * @date	2016年4月20日 下午6:03:13 <br>
 	 * @param	paramName
 	 * @return	Object

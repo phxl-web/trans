@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
  * jackson日期时间反序列化基本解析器 <br/>
  * date: 2015年12月16日 上午11:45:27 <br/>
  * 
- * @author 黄文君
+ *
  * @version
  * @since JDK 1.6
  */

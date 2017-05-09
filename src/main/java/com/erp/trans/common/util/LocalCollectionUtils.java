@@ -10,7 +10,7 @@ import org.apache.commons.collections.CollectionUtils;
 /**
  * 集合处理工具类（内部扩展）
  * @date: 2016年8月30日 下午5:37:02
- * @author 黄文君
+ *
  * @version 1.0
  * @since JDK 1.6
  */
@@ -22,7 +22,7 @@ public class LocalCollectionUtils {
 
 	/**
 	 * 列表数据逐页进行处理
-	 * @author 黄文君
+	 *
 	 * @date: 2016年8月30日 下午5:33:49
 	 *
 	 * @param	entityList	数据列表

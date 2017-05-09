@@ -3,7 +3,7 @@ package com.erp.trans.common.constant;
 /**
  * 公用常量、码值定义（项目间可以通用） <br/>
  * @date: 2016年4月16日 下午12:06:49 <br/>
- * @author 黄文君
+ *
  * @version 1.0
  * @since JDK 1.6
  */
@@ -11,7 +11,7 @@ public class CommonConst {
 	/**
 	 * 实体更新模式（） <br/>
 	 * @date: 2016年4月16日 下午12:01:37 <br/>
-	 * @author 黄文君
+	 *
 	 * @version 1.0
 	 * @since JDK 1.6
 	 */
@@ -25,7 +25,7 @@ public class CommonConst {
 	/**
 	 * 数据表的更新模式（） <br/>
 	 * @date: 2016年4月16日 下午12:01:37 <br/>
-	 * @author 黄文君
+	 *
 	 * @version 1.0
 	 * @since JDK 1.6
 	 */

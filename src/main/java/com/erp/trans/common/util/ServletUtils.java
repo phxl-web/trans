@@ -15,7 +15,7 @@ import org.aspectj.apache.bcel.classfile.Constant;
 
 /**
  * Servlet向頁面输出的几种字符格式
- * @author Administrator 
+ *
  *
  */
 public class ServletUtils {

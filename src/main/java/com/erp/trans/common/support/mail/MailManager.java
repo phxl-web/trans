@@ -32,7 +32,7 @@ import com.erp.trans.common.util.JSONUtils;
 
 /**
  * 邮件发送管理端
- * @author	黄文君
+ *
  * @version	1.0
  * @since	JDK 1.6
  */
@@ -44,7 +44,7 @@ public class MailManager {
 	
 	/**
 	 * 发送邮件
-	 * @author	黄文君
+	 *
 	 * @date	2016年9月18日 下午3:57:34
 	 * @param	mail
 	 * @return	void
@@ -141,7 +141,7 @@ public class MailManager {
 
 	/**
 	 * 生成友好的邮件地址列表
-	 * @author	黄文君
+	 *
 	 * @date	2016年9月19日 上午9:28:07
 	 * @param 	multiTo
 	 * @param 	toNicknames
@@ -172,7 +172,7 @@ public class MailManager {
 	
 	/**
 	 * 验证基本的Mail信息
-	 * @author	黄文君
+	 *
 	 * @date	2016年9月19日 下午4:06:01
 	 * @param mail
 	 * @throws ValidationException
@@ -194,7 +194,7 @@ public class MailManager {
 	/**
 	 * 邮件信息实体Bean
 	 * @date: 2016年9月18日 下午2:47:33
-	 * @author 黄文君
+	 *
 	 * @version 1.0
 	 * @since JDK 1.6
 	 */

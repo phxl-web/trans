@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * 基于jackson的json工具类
  * @date	2015年12月15日 下午6:45:57
- * @author	黄文君 
+ *
  * @version	1.1
  * @since	JDK 1.6
  */
@@ -81,7 +81,7 @@ public class JSONUtils {
 	
 	/**
 	 * json转换成java Bean
-	 * @author	黄文君
+	 *
 	 * @date	2017年4月28日 上午9:43:46
 	 * @param	jsonReader
 	 * @param	clz
@@ -94,7 +94,7 @@ public class JSONUtils {
 	
 	/**
 	 * json转换成java Bean
-	 * @author	黄文君
+	 *
 	 * @date	2017年4月28日 上午9:44:34
 	 * @param	jsonReader
 	 * @param	valueTypeRef
@@ -107,7 +107,7 @@ public class JSONUtils {
 	
 	/**
 	 * json转换成java Bean
-	 * @author	黄文君
+	 *
 	 * @date	2017年4月28日 上午9:44:48
 	 * @param	jsonInputStream
 	 * @param	clz
@@ -120,7 +120,7 @@ public class JSONUtils {
 	
 	/**
 	 * json转换成java Bean
-	 * @author	黄文君
+	 *
 	 * @date	2017年4月28日 上午9:45:05
 	 * @param	jsonInputStream
 	 * @param	valueTypeRef

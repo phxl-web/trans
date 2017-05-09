@@ -10,7 +10,7 @@ import com.erp.trans.common.adapter.CustomDateTimeSerializer;
 
 /**
  * Http请求返回报文模板
- * @author 黄文君 
+ *
  * @version 1.0
  * @since 2015-9-23
  * */
@@ -82,7 +82,7 @@ public class ResResult implements Serializable {
 	}
 	/**
 	 * 计算请求处理时长  <br/>
-	 * @author 黄文君
+	 *
 	 * @date: 2016年6月16日 上午9:29:25
 	 *
 	 * @return void

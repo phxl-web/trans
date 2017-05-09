@@ -13,7 +13,7 @@ import org.apache.commons.lang.StringUtils;
  * Reason:  ADD REASON(可选). <br/> 
  * date: 2015年11月11日 下午5:37:18 <br/> 
  * 模糊查询特殊字符处理
- * @author Administrator 
+ *
  * @version  
  * @since JDK 1.6
  */

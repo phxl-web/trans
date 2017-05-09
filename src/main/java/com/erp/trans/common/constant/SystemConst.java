@@ -12,7 +12,7 @@ package com.erp.trans.common.constant;
  * 开发框架、系统常量定义（非业务类） <br/>
  * date: 2016年2月2日 上午10:23:16 <br/> 
  * 
- * @author 黄文君 
+ *
  * @version 1.0 
  * @since JDK 1.6
  */
@@ -31,7 +31,7 @@ public class SystemConst {
 	/**
 	 * 功能开放标识  <br/>
 	 * @date: 2016年5月17日 上午11:08:26 <br/>
-	 * @author 黄文君
+	 *
 	 * @version 1.0
 	 * @since JDK 1.6
 	 */

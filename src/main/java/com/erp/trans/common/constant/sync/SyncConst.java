@@ -3,7 +3,7 @@ package com.erp.trans.common.constant.sync;
 /**
  * [功能说明]: 同步服务模块基本常量、码值资源定义  <br/>
  * @date: 2016年4月21日 下午2:15:27 <br/>
- * @author 黄文君
+ *
  * @version 1.0
  * @since JDK 1.6
  */
@@ -39,7 +39,7 @@ public class SyncConst {
 	/**
 	 * 变量名称 <br/>
 	 * @date: 2016年4月16日 上午8:33:19 <br/>
-	 * @author 黄文君
+	 *
 	 * @version 1.0
 	 * @since JDK 1.6
 	 */

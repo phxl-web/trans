@@ -33,7 +33,7 @@ import com.erp.trans.common.exception.ValidationException;
  * FTP基本操作工具类
  * 
  * @date	2016年7月9日 下午12:18:58
- * @author	黄文君
+ *
  * @version	1.0
  * @since	JDK 1.6
  */
@@ -111,7 +111,7 @@ public class FTPUtils {
 	
 	/**
 	 * FTP文件上传
-	 * @author	黄文君
+	 *
 	 * @date	2016年7月8日 下午10:45:59
 	 * @param	ftpClient
 	 * @param	directory
@@ -174,7 +174,7 @@ public class FTPUtils {
 	
 	/**
 	 * FTP文件下载
-	 * @author	黄文君
+	 *
 	 * @date	2016年7月8日 下午10:45:39
 	 * 
 	 * @param	filePath
@@ -272,7 +272,7 @@ public class FTPUtils {
 	/**
 	 * FTP文件下载
 	 * 
-	 * @author 黄文君
+	 *
 	 * @date: 2016年7月8日 下午10:48:57
 	 *
 	 * @param filePath
@@ -288,14 +288,14 @@ public class FTPUtils {
 	 * 辅助:可植入逻辑片段
 	 * 
 	 * @date: 2016年7月8日 下午5:51:00
-	 * @author 黄文君
+	 *
 	 * @version 1.0
 	 * @since JDK 1.6
 	 */
 	public interface Insertable {
 		/**
 		 * 读取ftp文件之前处理
-		 * @author	黄文君
+		 *
 		 * @date	2016年7月9日 下午12:48:46
 		 *
 		 * @param	ftpClient
@@ -308,7 +308,7 @@ public class FTPUtils {
 		
 		/**
 		 * 读取ftp文件之后处理
-		 * @author	黄文君
+		 *
 		 * @date	2016年7月9日 下午12:49:21
 		 *
 		 * @param	ftpClient
@@ -323,7 +323,7 @@ public class FTPUtils {
 	/**
 	 * FTP文件下载
 	 * 
-	 * @author 黄文君
+	 *
 	 * @date: 2016年7月8日 下午10:49:19
 	 *
 	 * @param filePath
@@ -370,7 +370,7 @@ public class FTPUtils {
 
 	/**
 	 * FTP文件删除
-	 * @author 黄文君
+	 *
 	 * @date: 2016年7月8日 下午10:49:37
 	 *
 	 * @param filePath
@@ -406,7 +406,7 @@ public class FTPUtils {
 	
 	/**
 	 * FTP目录删除
-	 * @author 黄文君
+	 *
 	 * @date: 2016年7月9日 下午8:54:07
 	 *
 	 * @param directory
@@ -469,7 +469,7 @@ public class FTPUtils {
 	
 	/**
 	 * FTP创建目录（并支持多级目录的创建）
-	 * @author 黄文君
+	 *
 	 * @date: 2016年7月9日 下午8:58:09
 	 *
 	 * @param directory
@@ -519,7 +519,7 @@ public class FTPUtils {
 	
 	/**
 	 * 判断FTP是否存在指定的文件
-	 * @author	黄文君
+	 *
 	 * @date	2016年7月12日 上午7:42:05
 	 *
 	 * @param	ftpClient
@@ -575,7 +575,7 @@ public class FTPUtils {
 	
 	/**
 	 * 判断FTP是否存在指定的目录
-	 * @author	黄文君
+	 *
 	 * @date	2016年7月12日 上午7:42:44
 	 *
 	 * @param	ftpClient
@@ -599,7 +599,7 @@ public class FTPUtils {
 	
 	/**
 	 * ftp远程复制文件
-	 * @author	黄文君
+	 *
 	 * @date	2017年3月26日 上午8:25:34
 	 * 
 	 * @param	fromFilePath
@@ -642,7 +642,7 @@ public class FTPUtils {
 	
 	/**
 	 * ftp远程移动文件
-	 * @author	黄文君
+	 *
 	 * @date	2017年3月26日 上午8:25:38
 	 * 
 	 * @param	fomrFilePath
@@ -656,7 +656,7 @@ public class FTPUtils {
 	/**
 	 * 建立FTP服务器连接(注意:创建连接后，用完记得释放连接退出)
 	 * @link	disconnectFtpServerConnect(FTPClient ftpClient)
-	 * @author	黄文君
+	 *
 	 * @date	2016年7月8日 上午11:17:49 <br/>
 	 *
 	 * @throws	Exception
@@ -720,7 +720,7 @@ public class FTPUtils {
 
 	/**
 	 * 断开FTP服务器连接
-	 * @author	黄文君
+	 *
 	 * @date	2016年7月8日 上午11:17:25
 	 *
 	 * @param	ftpClient
@@ -740,7 +740,7 @@ public class FTPUtils {
 	
 	/**
 	 * 字转串转码（转换字符集）
-	 * @author	黄文君
+	 *
 	 * @date	2016年7月11日 下午3:14:08
 	 *
 	 * @param	sourceString
@@ -758,7 +758,7 @@ public class FTPUtils {
 	
 	/**
 	 * 打印FTP服务交互状态行消息
-	 * @author	黄文君
+	 *
 	 * @date	2016年7月11日 上午9:49:54
 	 *
 	 * @param	ftpClient

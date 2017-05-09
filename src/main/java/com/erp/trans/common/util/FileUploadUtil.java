@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
  * 上传附件、删除附件常用工具类
  * date: 2015年10月8日 下午3:44:37 <br/> 
  *  
- * @author fenghui 
+ *
  * @version  
  * @since JDK 1.6
  */

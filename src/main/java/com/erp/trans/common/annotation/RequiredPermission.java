@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author eva
+ *
  * 接口需要的权限，有权限该接口才能访问，无权限不能直接访问该接口
  */
 @Target(ElementType.METHOD)

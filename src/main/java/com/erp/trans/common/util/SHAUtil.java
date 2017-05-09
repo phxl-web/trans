@@ -11,7 +11,7 @@ import java.security.MessageDigest;
  * Function: TODO ADD FUNCTION. <br/>
  * Reason: TODO ADD REASON. <br/> 
  * Date: 2015年10月16日 下午5:48:01 <br/>
- * @author Administrator
+ *
  * @version
  * @since JDK 1.6
  * @see

@@ -3,7 +3,7 @@ package com.erp.trans.common.exception;
 /**
  * 医商云同步服务器基本异常类
  * @date: 2016年8月29日 下午4:31:57
- * @author 黄文君
+ *
  * @version 1.0
  * @since JDK 1.6
  */

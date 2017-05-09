@@ -3,7 +3,7 @@ package com.erp.trans.common.constant.hospital;
 /**
  * [协和医院]: 同步功能定义 <br/>
  * @date	2016年4月12日 下午2:47:41 <br/>
- * @author	黄文君
+ *
  * @version	1.0
  * @since	JDK 1.6
  */

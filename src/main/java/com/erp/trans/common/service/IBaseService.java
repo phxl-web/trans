@@ -11,7 +11,7 @@ import com.erp.trans.common.entity.Pager;;
  * 公共service接口
  * service接口需要继承
  * date:2016.01.27
- * @author jzc
+ *
  * @version	1.0
  * */
 public interface IBaseService {

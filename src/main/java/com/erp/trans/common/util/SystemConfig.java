@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
  * Function: 加载系统Properties配置文件至内存中. <br/>
  * Reason: TODO ADD REASON. <br/>
  * Date: 2015年6月29日 下午5:13:50 <br/>
- * @author shijingbang
+ *
  * @version
  * @since JDK 1.6
  * @see
@@ -53,7 +53,7 @@ public class SystemConfig{
 	 * @return 设定参数
 	 * @return String 返回类型
 	 * @throws
-	 * @author shijingbang
+	 *
 	 */
 	public static String getProperty(String key) {
 		return properties.getProperty(key);
@@ -68,7 +68,7 @@ public class SystemConfig{
 	 * @return 设定参数
 	 * @return String 返回类型
 	 * @throws
-	 * @author shijingbang
+	 *
 	 */
 	public static String getProperty(String key, String defaultValue) {
 		return properties.getProperty(key, defaultValue);
@@ -82,7 +82,7 @@ public class SystemConfig{
 	 * @return 设定参数
 	 * @return boolean 返回类型
 	 * @throws
-	 * @author shijingbang
+	 *
 	 */
 	public static boolean containsKey(Object key) {
 		return properties.containsKey(key);
@@ -96,7 +96,7 @@ public class SystemConfig{
 	 * @return 设定参数
 	 * @return boolean 返回类型
 	 * @throws
-	 * @author shijingbang
+	 *
 	 */
 	public static boolean containsValue(Object value) {
 		return properties.containsValue(value);

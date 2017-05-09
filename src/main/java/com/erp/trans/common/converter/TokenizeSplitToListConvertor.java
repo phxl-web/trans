@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
 /**
  * 文本串按票房切割成串列表 <br/>
  * @date: 2016年4月27日 下午3:36:18 <br/>
- * @author 黄文君
+ *
  * @version 1.0
  * @since JDK 1.6
  */

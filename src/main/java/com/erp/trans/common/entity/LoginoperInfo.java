@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * 系统操作类
- * @author Administrator
+ *
  *
  */
 public class LoginoperInfo {

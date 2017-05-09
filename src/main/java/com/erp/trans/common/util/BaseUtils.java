@@ -20,7 +20,7 @@ import com.erp.trans.common.exception.YsynetException;
 /** 
  * 基本工具方法类
  * @Date:     2015年9月23日 下午3:53:24
- * @author   黄文君 
+ *
  * @version  1.0
  * @since    JDK 1.6      
  */
@@ -28,7 +28,7 @@ public class BaseUtils {
 
 	/**
 	 * 从异常堆栈中追朔根本异常
-	 * @author 黄文君
+	 *
 	 * @date: 2016年8月29日 上午10:22:37
 	 *
 	 * @param e
@@ -49,7 +49,7 @@ public class BaseUtils {
 	
 	/**
 	 * 从异常堆栈中追朔根本原因（消息）
-	 * @author 黄文君
+	 *
 	 * @date: 2016年8月29日 上午10:23:01
 	 *
 	 * @param e
@@ -61,7 +61,7 @@ public class BaseUtils {
 	
 	/**
 	 * 从异常堆栈中追朔根本原因（消息）
-	 * @author 黄文君
+	 *
 	 * @date: 2016年8月29日 上午10:22:16
 	 *
 	 * @param e
@@ -88,7 +88,7 @@ public class BaseUtils {
 	
 	/**
 	 * 空值指定默认值方法
-	 * @author 黄文君
+	 *
 	 * @date: 2016年8月7日 下午5:00:52
 	 *
 	 * @param value

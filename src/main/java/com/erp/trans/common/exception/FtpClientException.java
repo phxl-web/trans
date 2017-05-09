@@ -3,7 +3,7 @@ package com.erp.trans.common.exception;
 /**
  * FTP客户端请求类异常
  * @date: 2016年7月11日 上午9:54:03
- * @author 黄文君
+ *
  * @version 1.0
  * @since JDK 1.6
  */

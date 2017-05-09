@@ -11,7 +11,7 @@ import com.erp.trans.common.exception.ValidationException;
 /**
  * 本地化扩展StringUtils
  * @date	2016年10月28日 下午4:01:16
- * @author 	黄文君
+ *
  * @version 1.0
  * @since	JDK 1.6
  */
@@ -19,7 +19,7 @@ public class LocalStringUtils {
 	
 	/**
 	 * 判断入参的每个字符串，都是空
-	 * @author	黄文君
+	 *
 	 * @date	2016年12月26日 上午11:49:34
 	 * @param	value
 	 * @param	moreValue
@@ -41,7 +41,7 @@ public class LocalStringUtils {
 	
 	/**
 	 * 判断入参的每个字符串，都是非空
-	 * @author	黄文君
+	 *
 	 * @date	2016年12月26日 上午11:49:34
 	 * @param	value
 	 * @param	moreValue
@@ -63,7 +63,7 @@ public class LocalStringUtils {
 	
 	/**
 	 * 判断入参的每个字符串，都是空串
-	 * @author	黄文君
+	 *
 	 * @date	2016年12月26日 上午11:49:34
 	 * @param	value
 	 * @param	moreValue
@@ -85,7 +85,7 @@ public class LocalStringUtils {
 	
 	/**
 	 * 判断入参的每个字符串，都是非空串
-	 * @author	黄文君
+	 *
 	 * @date	2016年12月26日 上午11:49:34
 	 * @param	value
 	 * @param	moreValue
@@ -107,7 +107,7 @@ public class LocalStringUtils {
 	
 	/**
 	 * 如果字符串是null, 默认处理成""
-	 * @author	黄文君
+	 *
 	 * @date	2016年12月8日 下午4:50:40
 	 * @param	str		字符串值
 	 * @return	String
@@ -118,7 +118,7 @@ public class LocalStringUtils {
 	
 	/**
 	 * 将对象串化以后，trim处理，如果对象是NULL，返回空串
-	 * @author	黄文君
+	 *
 	 * @date	2016年10月28日 下午3:57:56
 	 * @param	object
 	 * @return	String
@@ -132,7 +132,7 @@ public class LocalStringUtils {
 	
 	/**
 	 * 将对象串化以后，trim处理，如果对象是NULL，返回空串（指定默认值）
-	 * @author	黄文君
+	 *
 	 * @date	2016年10月28日 下午4:16:18
 	 * @param	object
 	 * @param	defaultValue
@@ -145,7 +145,7 @@ public class LocalStringUtils {
 	
 	/**
 	 * 将对象串化以后，trim处理，如果对象是NULL，返回NULL
-	 * @author	黄文君
+	 *
 	 * @date	2016年10月28日 下午3:57:59
 	 * @param	object
 	 * @return	String
@@ -159,7 +159,7 @@ public class LocalStringUtils {
 	
 	/**
 	 * 将对象串化以后，trim处理，如果对象是NULL，返回NULL（指定默认值）
-	 * @author	黄文君
+	 *
 	 * @date	2016年10月28日 下午4:19:02
 	 * @param	object
 	 * @param	defaultValue
@@ -172,7 +172,7 @@ public class LocalStringUtils {
 
 	/**
 	 * 使用指定的字符，拼接指定长度的字符串
-	 * @author	黄文君
+	 *
 	 * @date	2016年9月27日 上午9:51:51
 	 * @param 	word
 	 * @param 	count
@@ -192,7 +192,7 @@ public class LocalStringUtils {
 	
 	/**
 	 * 使用指定的字符，拼接指定长度的字符串
-	 * @author	黄文君
+	 *
 	 * @date	2016年9月27日 上午9:51:51
 	 * @param 	word
 	 * @param 	count
@@ -217,7 +217,7 @@ public class LocalStringUtils {
 	 * <pre>3.其中半角的空格是32.对应的全角空格是12288</pre>
 	 * <pre>半角和全角的关系很明显,除空格外的字符偏移量是65248(65281-33 = 65248)</pre>
 	 * 
-	 * @author	黄文君
+	 *
 	 * @date	2016年11月7日 上午11:43:10
 	 * @param	inputString	源字符串
 	 * @return	String			半角字符串
@@ -250,7 +250,7 @@ public class LocalStringUtils {
 	 * <pre>3.其中半角的空格是32.对应的全角空格是12288</pre>
 	 * <pre>半角和全角的关系很明显,除空格外的字符偏移量是65248(65281-33 = 65248)</pre>
 	 * 
-	 * @author	黄文君
+	 *
 	 * @date	2016年11月7日 上午11:43:10
 	 *
 	 * @param	inputString		源字符串
@@ -277,7 +277,7 @@ public class LocalStringUtils {
 	
 	/**
 	 * 字符器切割生成列表
-	 * @author	黄文君
+	 *
 	 * @date	2017年2月8日 上午11:42:50
 	 * @param	sequeue
 	 * @param	splitToken
@@ -300,7 +300,7 @@ public class LocalStringUtils {
 	
 	/**
 	 * 驼峰命名法转下划线命名法
-	 * @author	黄文君
+	 *
 	 * @date	2017年2月20日 上午11:22:05
 	 * @param	camelCaseName
 	 * @return	String

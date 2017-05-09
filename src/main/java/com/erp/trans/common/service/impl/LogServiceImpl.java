@@ -30,7 +30,7 @@ import net.sf.json.JSONObject;
 
 /**
  * 系统操作日志
- * @author Administrator
+ *
  *
  */
 public class LogServiceImpl implements LogService{

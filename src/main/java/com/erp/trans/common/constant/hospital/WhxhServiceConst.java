@@ -14,7 +14,7 @@ package com.erp.trans.common.constant.hospital;
  * 协和医院，业务常量与码值对照
  * @date	2015年9月25日 下午3:15:42
  * 
- * @author	黄文君
+ *
  * @version	1.0
  * @since	JDK 1.6
  */
@@ -39,7 +39,7 @@ public class WhxhServiceConst {
 	/**
 	 * 单据类别
 	 * @date	2016年6月3日 下午4:30:46
-	 * @author	黄文君
+	 *
 	 * @version 1.0
 	 * @since	JDK 1.6
 	 */
@@ -96,7 +96,7 @@ public class WhxhServiceConst {
      * 发票标志  <br> 
      * @date	2016年2月16日 下午5:31:59
      * 
-     * @author	黄文君 
+     *
      * @version CustomConst 
      * @since	JDK 1.6
      */
@@ -116,7 +116,7 @@ public class WhxhServiceConst {
     /**
      * 库房类型   <br>
      * @date	2016年4月28日 上午10:49:10
-     * @author	黄文君
+     *
      * @version 1.0
      * @since	JDK 1.6
      */
@@ -134,7 +134,7 @@ public class WhxhServiceConst {
     /**
      * 库房编号字典
      * @date	2017年3月10日 上午9:32:38
-     * @author	黄文君
+     *
      * @version	1.0
      * @since	JDK 1.6
      */
@@ -180,7 +180,7 @@ public class WhxhServiceConst {
 	/**
 	 * 患者耗材使用登记主信息：登记状态
 	 * @date	2016年12月20日 下午3:53:05
-	 * @author	黄文君
+	 *
 	 * @version	1.0
 	 * @since	JDK 1.6
 	 */
@@ -200,7 +200,7 @@ public class WhxhServiceConst {
 	/**
 	 * 患者耗材使用登记明细记录: 退费标识
 	 * @date	2016年12月20日 下午3:53:05
-	 * @author	黄文君
+	 *
 	 * @version	1.0
 	 * @since	JDK 1.6
 	 */

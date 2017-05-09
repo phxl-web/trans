@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 为了满足通用简码的需要特此开发此工具
- * @author	高攀
+ *
  * @version 1.0
  * @since	JDK 1.6
  */

@@ -7,7 +7,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * FTP客户端配置项 <br/>
  * @date: 2016年7月8日 上午11:27:57 <br/>
- * @author 黄文君
+ *
  * @version 1.0
  * @since JDK 1.6
  */

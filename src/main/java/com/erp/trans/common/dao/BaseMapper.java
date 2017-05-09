@@ -12,7 +12,7 @@ import com.erp.trans.common.entity.Pager;
  * 提供：单主键查询、多主键查询、列表查询、分页查询、新增、修改、修改（覆盖）、单主键删除、多主键删除
  * mapper类可继承此类使用
  * date:2016.01.27
- * @author jzc
+ *
  * @version	1.0
  * */
 public interface BaseMapper {
