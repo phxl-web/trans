@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.trans.dao.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.UserInfo">
+    <id column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="USER_NO" jdbcType="VARCHAR" property="userNo" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="FSTATE" jdbcType="VARCHAR" property="fstate" />
+    <result column="ORG_ID" jdbcType="VARCHAR" property="orgId" />
+    <result column="MOBILE_PHONE" jdbcType="VARCHAR" property="mobilePhone" />
+    <result column="E_MAIL" jdbcType="VARCHAR" property="eMail" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="MODIFY_DATE" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="USER_LEVEL" jdbcType="VARCHAR" property="userLevel" />
+    <result column="PWD" jdbcType="VARCHAR" property="pwd" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    USER_ID, USER_NO, USER_NAME, FSTATE, ORG_ID, MOBILE_PHONE, E_MAIL, CREATE_DATE, MODIFY_DATE
+  </sql>
+  <sql id="Base_Column_List_With_Prefix">
+		u.USER_ID, u.USER_NO, u.USER_NAME, u.PWD,u.FSTATE, u.MODIFY_DATE, u.CREATE_DATE,
+		u.USER_LEVEL, u.MOBILE_PHONE, u.E_MAIL,
+		u.ORG_ID	
+	</sql>
+	
+	<select id="findUserNoExist" resultType="int">
+	select COUNT(1) from (
+	    select ts_user_info.USER_NO from ts_user_info where ts_user_info.USER_NO = #{userNo, jdbcType=VARCHAR}
+     )
+    </select>
+
+	<select id="selectUserMenu" resultType="hashMap">
+		select m.menu_id
+		from ts_group_user gu
+		left join ts_group g on gu.GROUP_ID = g.GROUP_ID
+		left join ts_group_menu gm on g.GROUP_ID = gm.GROUP_ID
+		left join ts_menu m on gm.MENU_ID = m.MENU_ID
+		where gu.USER_ID = #{userId,jdbcType=VARCHAR} and m.FSTATE = '01'
+    </select>
+
+	<resultMap id="UserExtResultMap" type="com.erp.trans.entity.UserInfo" extends="BaseResultMap">
+		<result column="ORG_NAME" property="orgName" jdbcType="VARCHAR"/>
+		<result column="GROUPS" property="groups" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询机构用户列表 -->
+	<select id="findOrgUserList" resultMap="UserExtResultMap" parameterType="com.erp.trans.common.entity.Pager">
+		SELECT 
+			<include refid="Base_Column_List_With_Prefix"></include>, 
+			o.ORG_NAME
+		FROM ts_user_info u
+		LEFT JOIN td_org_info o on u.ORG_ID=o.ORG_ID 
+		WHERE 1=1 
+			<choose>
+				<!-- 系统管理员 -->
+				<when test='conditiions.sessionOrgType=="09" and conditiions.sessionUserLevel=="01"'>
+					and ( (u.USER_LEVEL in ('01', '02', '03') and u.ORG_ID = #{conditiions.sessionOrgId, jdbcType=DECIMAL}) or u.USER_LEVEL = '02')
+				</when>
+				<!-- 运营商（服务商）用户 -->
+				<when test='conditiions.sessionOrgType=="09" and conditiions.sessionUserLevel!="01"'>
+					and ( (u.USER_LEVEL in ('02', '03') and u.ORG_ID = #{conditiions.sessionOrgId, jdbcType=DECIMAL}) or u.USER_LEVEL = '02' )
+				</when>
+				<!-- 医院、供应商、监管部门 -->
+				<otherwise>
+					and u.USER_LEVEL in ('02', '03') and u.ORG_ID = #{conditiions.sessionOrgId, jdbcType=DECIMAL}
+				</otherwise>
+			</choose>
+			<if test="conditiions!=null and !conditiions.empty">
+				<if test="conditiions.searchName != null and conditiions.searchName != ''">
+					and (
+							regexp_like(u.USER_NO, #{conditiions.searchName, jdbcType=VARCHAR})
+						or regexp_like(u.USER_NAME, #{conditiions.searchName, jdbcType=VARCHAR})
+						or regexp_like(o.ORG_NAME, #{conditiions.searchName, jdbcType=VARCHAR})
+						or regexp_like(o.ORG_ALIAS, #{conditiions.searchName, jdbcType=VARCHAR})
+						or regexp_like(o.FQUN, #{conditiions.searchName, jdbcType=VARCHAR})
+					)
+			   </if>
+		   </if>
+			
+		<!-- 排序 -->
+		<choose>
+			<when test="conditiions != null and conditiions.orderMark != null and conditiions.orderField != null and conditiions.orderField!=''">
+				order by [orderField] ${conditiions.orderMark}
+			</when>
+			<otherwise>
+				order by nvl(u.MODIFY_TIME, u.CREATE_TIME) desc 
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 查询用户名（登录名）是否存在 -->
+	<select id="countUserno" resultType="int">
+		select COUNT(*) from (
+			select USER_NO from ts_user_info where USER_NO = #{userNo,jdbcType=VARCHAR}
+				<if test="excludeUserId!=null and excludeUserId!=''">
+					and USER_ID != #{excludeUserId}
+				</if>
+		)
+	</select>
+	
+	<!-- 判断指定机构是否运营商（服务商） -->
+	<select id="findServiceOrgByOrgId" resultType="int">
+		SELECT count(*) FROM td_org_info where ORG_ID = #{orgId,jdbcType=VARCHAR} and ORG_TYPE='09'
+	</select>
+
+	<!-- 查看指定机构的状态 -->
+	<select id="findOrgFstateByOrgId" resultType="string">
+		SELECT FSTATE FROM td_org_info where ORG_ID = #{orgId,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 查询机构对应的机构管理员 -->
+	<select id="findManagerUserIdByOrgId" resultType="string">
+		SELECT USER_ID FROM ts_user_info where USER_LEVEL='02' and ORG_ID = #{orgId,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询还没有机构管理员的机构列表 -->
+	<select id="findWithoutAdminOrgList" resultType="java.util.LinkedHashMap" parameterType="com.erp.trans.common.entity.Pager">
+		SELECT
+		  DISTINCT o.ORG_ID "value", o.ORG_NAME "text"
+		FROM  td_org_info o
+		WHERE o.FSTATE='01'
+		and not exists(
+		  SELECT u.ORG_ID FROM ts_user_info u WHERE u.ORG_ID=o.ORG_ID AND u.USER_LEVEL='02'
+		)
+		<if test="conditiions!=null">
+			<if test="conditiions.searchName!=null and conditiions.searchName!=''">
+				and regexp_like(o.ORG_NAME, #{conditiions.searchName, jdbcType=VARCHAR})
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据用户id查询用户信息 -->
+	<select id="findUserInfoById" resultMap="UserExtResultMap" parameterType="string">
+		SELECT 
+			<include refid="Base_Column_List_With_Prefix"></include>
+			, o.ORG_NAME 
+		FROM ts_user_info u
+		LEFT JOIN td_org_info o on u.ORG_ID=o.ORG_ID
+		where u.USER_ID = #{userId}
+	</select>
+ 
+</mapper>

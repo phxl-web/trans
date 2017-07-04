@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.trans.common.dao.BaseMapper">
+
+	<select id="find" resultType="map" flushCache="true" useCache="false">
+		select * from ${tableName}
+	</select>
+	
+	<select id="findByIds" resultType="map" flushCache="true" useCache="false">
+		select * from ${tableName}
+	</select>
+	
+	<select id="searchList" resultType="map" flushCache="true" useCache="false">
+		select * from ${tableName}
+	</select>
+	
+	<insert id="insertInfo">
+		insert into ${tableName} ( fields ) values ( parameters )
+	</insert>
+	
+	<update id="updateInfo">
+		update ${tableName} set fields where keys
+	</update>
+	
+	<update id="updateInfoCover">
+		update ${tableName} set fields where keys
+	</update>
+	
+	<delete id="deleteInfoById">
+		delete from ${tableName} where keys
+	</delete>
+	
+	<delete id="deleteInfoByIds">
+		delete from ${tableName} where keys
+	</delete>
+	
+	<delete id="deleteInfo">
+		delete from ${tableName} where keys
+	</delete>
+	
+	<!-- statementType="STATEMENT" -->
+	<select id="paginateList" resultType="map" flushCache="true" useCache="false">
+		select * from ${tableName}
+	</select>
+	
+	<select id="funcMax" resultType="long" flushCache="true" useCache="false">
+		select nvl(max(field),1) from ${tableName}
+	</select>
+	
+</mapper>

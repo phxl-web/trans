@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.trans.dao.ChargeInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.ChargeInfo" >
+    <id column="CHARGE_ID" property="chargeId" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="CHARGE_TYPE" property="chargeType" jdbcType="VARCHAR" />
+    <result column="FREIGHT_RATES" property="freightRates" jdbcType="VARCHAR" />
+    <result column="FREIGHT" property="freight" jdbcType="VARCHAR" />
+    <result column="ADVANCES" property="advances" jdbcType="VARCHAR" />
+    <result column="PREPAID_OIL_CARD" property="prepaidOilCard" jdbcType="VARCHAR" />
+    <result column="QUALITY_LOSS" property="qualityLoss" jdbcType="VARCHAR" />
+    <result column="SUBSIDY" property="subsidy" jdbcType="VARCHAR" />
+    <result column="REVERSE_CHARGE" property="reverseCharge" jdbcType="VARCHAR" />
+    <result column="MIS_COSTS" property="misCosts" jdbcType="VARCHAR" />
+    <result column="GPS_PAYMENT" property="gpsPayment" jdbcType="VARCHAR" />
+    <result column="CHARGE_AMOUNT" property="chargeAmount" jdbcType="VARCHAR" />
+    <result column="DESPATCH_PLAN_ID" property="despatchPlanId" jdbcType="VARCHAR" />
+    <result column="CONSIGN_DETAIL_ID" property="consignId" jdbcType="VARCHAR" />
+    <result column="CONTRACT_ID" property="contractId" jdbcType="VARCHAR" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR" />
+    <result column="CHARGE_FSTATE" property="chargeFstate" jdbcType="VARCHAR" />
+    <result column="KILO_PRICE" property="kiloPrice" jdbcType="VARCHAR" />
+    <result column="KILOMETERS" property="kilometers" jdbcType="VARCHAR" />
+    <result column="OIL_COST1" property="oilCost1" jdbcType="VARCHAR" />
+    <result column="OIL_COST2" property="oilCost2" jdbcType="VARCHAR" />
+    <result column="OIL_COST3" property="oilCost3" jdbcType="VARCHAR" />
+    <result column="OIL_COST4" property="oilCost4" jdbcType="VARCHAR" />
+    <result column="OIL_SUBSIDY" property="oilSubsidy" jdbcType="VARCHAR" />
+    
+  </resultMap>
+   <sql id="Charge_Return_List">
+  	  ci.CHARGE_ID "chargeId",
+  	  c.CONSIGN_NO "consignNo", cd.CAR_BRAND "carBrand", cd.CAR_MODEL "carModel", 
+      cd.AMOUNT "amount", cd.CHASSIS_NO "chassisNo", 
+      cd.DESPATCH_DATE "despatchDate",c.LOCATION_TO "locationTo", c.RECEIVE_ORG_NAME "receiveOrgName", 
+      c.CONSIGN_ORG_NAME "consignOrgName", 
+      c.LOCATION_FROM "locationFrom",r.CARRIER_NAME "carrierName",r.TRANSPORT_TOOL "transportTool",
+      ci.FREIGHT_RATES "freightRates",ci.ADVANCES "advances",ci.PREPAID_OIL_CARD "prepaidOilCard",
+      ci.QUALITY_LOSS "qualityLoss",ci.SUBSIDY "subsidy",ci.REVERSE_CHARGE "reverseCharge",ci.MIS_COSTS "misCosts",
+      ci.GPS_PAYMENT "gpsPayment",ci.CHARGE_AMOUNT "chargeAmount",ci.MODIFY_USER_NAME "modifyUserName",ci.MODIFY_DATE "modifyDate",
+      ci.KILO_PRICE "kiloPrice",ci.KILOMETERS "kilometers",ci.OIL_COST1 "oilCost1",ci.OIL_COST2 "oilCost2",
+      ci.OIL_COST3 "oilCost3",ci.OIL_COST4 "oilCost4",ci.OIL_SUBSIDY "oilSubsidy"
+      
+  </sql>
+   <select id="searchChargeList" resultType="hashMap"
+		parameterType="com.erp.trans.common.entity.Pager">
+		select
+		<include refid="Charge_Return_List"></include>
+		from tb_charge_info ci
+		left join tb_consign_detail cd on cd.consign_detail_id = ci.consign_detail_id
+		left join tb_consign c on cd.consign_id = c.consign_id
+		left join tb_despatch_plan dp on cd.despatch_plan_id = dp.despatch_plan_id
+		left join td_record_info r on dp.record_id = r.record_id
+		<where>
+			<if test="conditiions.orgId != null and conditiions.orgId != '0' and conditiions.orgId != '-1'">
+				and c.ORG_ID = #{conditiions.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="conditiions.chargeType!= null and conditiions.chargeType != ''">
+				and  ci.charge_type = #{conditiions.chargeType,jdbcType=VARCHAR})
+			</if>
+			<if test="conditiions.consignOrgName != null and conditiions.consignOrgName != ''">
+				and  <![CDATA[   regexp_like(c.CONSIGN_ORG_NAME, #{conditiions.consignOrgName,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.carrierName != null and conditiions.carrierName != ''">
+				and  <![CDATA[   regexp_like(r.CARRIER_NAME, #{conditiions.carrierName,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.transportTool != null and conditiions.transportTool != ''">
+				and  <![CDATA[   regexp_like(r.TRANSPORT_TOOL, #{conditiions.transportTool,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.chargeFstate != null and conditiions.chargeFstate != ''">
+				and ci.charge_fstate = #{conditiions.chargeFstate,jdbcType=VARCHAR}
+			</if>
+			<if test="conditiions.dispatchDateStart != null and conditiions.dispatchDateStart != ''">
+				and <![CDATA[ date_format(cd.DESPATCH_DATE,'%Y-%m-%d') >= #{conditiions.dispatchDateStart,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="conditiions.createDateEnd != null and conditiions.createDateEnd != ''">
+				and <![CDATA[ date_format(cd.DESPATCH_DATE,'%Y-%m-%d') <=  #{conditiions.createDateEnd,jdbcType=VARCHAR} ]]>
+			</if>
+		</where>
+		order by date_format(cd.DESPATCH_DATE,'%Y-%m-%d %T') desc
+	</select>
+	<insert id="batchCostInsertByCDetails">
+		insert into tb_charge_info(charge_id,org_id,charge_type,consign_detail_id,
+				despatch_plan_id,contract_id,FREIGHT_RATES,charge_fstate,MODIFY_USER_ID,
+				MODIFY_DATE,MODIFY_USER_NAME)
+		select 	cc.charge_id,#{despatchPlan.orgId, jdbcType=VARCHAR},cc.charge_type,
+		cc.consign_detail_id,cc.despatch_plan_id,cc.contract_id,cc.FREIGHT_RATES,
+		'00',#{despatchPlan.modifyUserId, jdbcType=VARCHAR},now(),#{despatchPlan.modifyUserName, jdbcType=VARCHAR}
+		from
+			(SELECT replace(uuid(),'-','') as "charge_id", 
+				case when r.carrier_type = '1' then '03'
+					 when r.carrier_type = '2' then '02'
+				end as "charge_type",
+				cd.consign_detail_id, 
+				dp.despatch_plan_id,
+				ct.contract_id,
+				ct.FREIGHT_RATES	   
+				from tb_consign_detail cd
+				left join tb_consign c on cd.consign_id = c.consign_id
+				left join tb_despatch_plan dp on cd.despatch_plan_id = dp.despatch_plan_id
+				left join td_record_info r on dp.record_id = r.record_id
+				left join 
+				(   select con.contract_id,con.FREIGHT_RATES,cd.consign_detail_id     
+ 					from tb_contract con,tb_consign_detail cd, tb_consign c,tb_despatch_plan dp,td_record_info r
+					where con.contract_type='02' and c.ORG_ID = con.org_id
+						and cd.despatch_plan_id = dp.despatch_plan_id 
+						and dp.record_id = r.record_id
+						and con.carrier_name = r.carrier_name
+						and c.LOCATION_FROM  = con.LOCATION_FROM and c.LOCATION_TO = con.LOCATION_TO 
+						and (cd.car_brand = con.car_brand or con.car_brand is null) 
+						and (cd.car_model = con.car_model or con.car_model is null)
+						and cd.DESPATCH_DATE between con.CONTRACT_START and con.CONTRACT_END
+					order by con.modify_date desc
+					limit 0,1
+				) ct on ct.consign_detail_id = cd.consign_detail_id
+				where cd.consign_detail_id in  
+					<foreach collection="consignDetailIds" index="index" open="(" close=")" separator=",">
+						#{consignDetailIds[${index}], jdbcType=VARCHAR}	
+				    </foreach>			
+			) cc
+	</insert>
+	
+	<insert id="batchProfitInsertByCDetails">
+	insert into tb_charge_info(charge_id,org_id,charge_type,consign_detail_id,
+				despatch_plan_id,contract_id,FREIGHT_RATES,charge_fstate,MODIFY_USER_ID,
+				MODIFY_DATE,MODIFY_USER_NAME)
+		select 	cc.charge_id,#{despatchPlan.orgId, jdbcType=VARCHAR},cc.charge_type,
+		cc.consign_detail_id,cc.despatch_plan_id,cc.contract_id,cc.FREIGHT_RATES,
+		'00',#{despatchPlan.modifyUserId, jdbcType=VARCHAR},now(),#{despatchPlan.modifyUserName, jdbcType=VARCHAR}
+		from
+			(SELECT replace(uuid(),'-','') as "charge_id", 
+				'01' as "charge_type",
+				cd.consign_detail_id, 
+				cd.despatch_plan_id,
+				ct.contract_id,
+				ct.FREIGHT_RATES	   
+				from tb_consign_detail cd
+				left join 
+				(   select con.contract_id,con.FREIGHT_RATES,cd.consign_detail_id     
+ 					from tb_contract con,tb_consign_detail cd, tb_consign c   
+					where con.contract_type='01' and c.ORG_ID = con.org_id 
+						and con.CONSIGN_ORG_NAME = c.CONSIGN_ORG_NAME
+						and c.LOCATION_FROM  = con.LOCATION_FROM and c.LOCATION_TO = con.LOCATION_TO 
+						and (cd.car_brand = con.car_brand or con.car_brand is null) 
+						and (cd.car_model = con.car_model or con.car_model is null)
+						and cd.DESPATCH_DATE between con.CONTRACT_START and con.CONTRACT_END
+					order by con.modify_date desc
+					limit 0,1
+				) ct on ct.consign_detail_id = cd.consign_detail_id
+				where cd.consign_detail_id in  
+					<foreach collection="consignDetailIds" index="index" open="(" close=")" separator=",">
+						#{consignDetailIds[${index}], jdbcType=VARCHAR}	
+				    </foreach>			
+			) cc
+	</insert>
+	
+	<update id="updateChargeInfo">
+ update td_charge_info set
+    charge_fsate=
+  <foreach collection="chargeInfos" item="item" index="index" separator=" " open="case charge_id" close="end">
+      when #{item.chargeId,jdbcType=VARCHAR} then #{item.chargeFstate,jdbcType=VARCHAR}
+  </foreach>
+  ,MODIFY_USER_ID=
+  <foreach collection="chargeInfos" item="item" index="index" separator=" " open="case charge_id" close="end">
+      when #{item.charge_id,jdbcType=VARCHAR} then #{item.modifyUserId,jdbcType=VARCHAR}
+  </foreach>
+  ,MODIFY_USER_NAME=
+  <foreach collection="chargeInfos" item="item" index="index" separator=" " open="case charge_id" close="end">
+      when #{item.charge_id,jdbcType=VARCHAR} then #{item.modifyUserNAME,jdbcType=VARCHAR}
+  </foreach>
+  ,MODIFY_DATE=
+  <foreach collection="chargeInfos" item="item" index="index" separator=" " open="case charge_id" close="end">
+      when #{item.charge_id,jdbcType=VARCHAR} then #{item.modifyDate,jdbcType=TIMESTAMP}
+  </foreach>
+  where charge_id in
+  <foreach collection="chargeInfos" index="index" item="item" separator="," open="(" close=")">
+      #{item.chargeId,jdbcType=VARCHAR}
+  </foreach>
+  </update>
+   <delete id="batchDeleteByCDetails">
+   	  delete from tb_charge_info
+      where CONSIGN_DETAIL_ID in 
+      <foreach collection="consignDetailIds" item="consignDetail" index="index" open="(" close=")" separator=",">
+				#{consignDetailIds[${index}], jdbcType=VARCHAR}	
+	  </foreach>
+   </delete>
+  <insert id="insert" parameterType="com.erp.trans.entity.ChargeInfo" >
+    insert into TB_CHARGE_INFO (CHARGE_ID, ORG_ID, CHARGE_TYPE, 
+      FREIGHT_RATES, FREIGHT, ADVANCES, 
+      PREPAID_OIL_CARD, QUALITY_LOSS, SUBSIDY, 
+      REVERSE_CHARGE, MIS_COSTS, GPS_PAYMENT, 
+      CHARGE_AMOUNT, MAIN_DRIVE, CO_PILOT, 
+      TRANPORT_TOOL, DESPATCH_PLAN_ID, CONSIGN_ID, 
+      CONTRACT_ID, MODIFY_DATE, MODIFY_USER_ID
+      )
+    values (#{chargeId,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{chargeType,jdbcType=VARCHAR}, 
+      #{freightRates,jdbcType=VARCHAR}, #{freight,jdbcType=VARCHAR}, #{advances,jdbcType=VARCHAR}, 
+      #{prepaidOilCard,jdbcType=VARCHAR}, #{qualityLoss,jdbcType=VARCHAR}, #{subsidy,jdbcType=VARCHAR}, 
+      #{reverseCharge,jdbcType=VARCHAR}, #{misCosts,jdbcType=VARCHAR}, #{gpsPayment,jdbcType=VARCHAR}, 
+      #{chargeAmount,jdbcType=VARCHAR}, #{mainDrive,jdbcType=VARCHAR}, #{coPilot,jdbcType=VARCHAR}, 
+      #{tranportTool,jdbcType=VARCHAR}, #{despatchPlanId,jdbcType=VARCHAR}, #{consignId,jdbcType=VARCHAR}, 
+      #{contractId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.trans.entity.ChargeInfo" >
+    insert into TB_CHARGE_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="chargeId != null" >
+        CHARGE_ID,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="chargeType != null" >
+        CHARGE_TYPE,
+      </if>
+      <if test="freightRates != null" >
+        FREIGHT_RATES,
+      </if>
+      <if test="freight != null" >
+        FREIGHT,
+      </if>
+      <if test="advances != null" >
+        ADVANCES,
+      </if>
+      <if test="prepaidOilCard != null" >
+        PREPAID_OIL_CARD,
+      </if>
+      <if test="qualityLoss != null" >
+        QUALITY_LOSS,
+      </if>
+      <if test="subsidy != null" >
+        SUBSIDY,
+      </if>
+      <if test="reverseCharge != null" >
+        REVERSE_CHARGE,
+      </if>
+      <if test="misCosts != null" >
+        MIS_COSTS,
+      </if>
+      <if test="gpsPayment != null" >
+        GPS_PAYMENT,
+      </if>
+      <if test="chargeAmount != null" >
+        CHARGE_AMOUNT,
+      </if>
+      <if test="mainDrive != null" >
+        MAIN_DRIVE,
+      </if>
+      <if test="coPilot != null" >
+        CO_PILOT,
+      </if>
+      <if test="tranportTool != null" >
+        TRANPORT_TOOL,
+      </if>
+      <if test="despatchPlanId != null" >
+        DESPATCH_PLAN_ID,
+      </if>
+      <if test="consignId != null" >
+        CONSIGN_ID,
+      </if>
+      <if test="contractId != null" >
+        CONTRACT_ID,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+      <if test="modifyUserId != null" >
+        MODIFY_USER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="chargeId != null" >
+        #{chargeId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeType != null" >
+        #{chargeType,jdbcType=VARCHAR},
+      </if>
+      <if test="freightRates != null" >
+        #{freightRates,jdbcType=VARCHAR},
+      </if>
+      <if test="freight != null" >
+        #{freight,jdbcType=VARCHAR},
+      </if>
+      <if test="advances != null" >
+        #{advances,jdbcType=VARCHAR},
+      </if>
+      <if test="prepaidOilCard != null" >
+        #{prepaidOilCard,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityLoss != null" >
+        #{qualityLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="subsidy != null" >
+        #{subsidy,jdbcType=VARCHAR},
+      </if>
+      <if test="reverseCharge != null" >
+        #{reverseCharge,jdbcType=VARCHAR},
+      </if>
+      <if test="misCosts != null" >
+        #{misCosts,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsPayment != null" >
+        #{gpsPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeAmount != null" >
+        #{chargeAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="mainDrive != null" >
+        #{mainDrive,jdbcType=VARCHAR},
+      </if>
+      <if test="coPilot != null" >
+        #{coPilot,jdbcType=VARCHAR},
+      </if>
+      <if test="tranportTool != null" >
+        #{tranportTool,jdbcType=VARCHAR},
+      </if>
+      <if test="despatchPlanId != null" >
+        #{despatchPlanId,jdbcType=VARCHAR},
+      </if>
+      <if test="consignId != null" >
+        #{consignId,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null" >
+        #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

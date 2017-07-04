@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.trans.dao.DespatchPlanMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.DespatchPlan" >
+    <result column="DESPATCH_PLAN_ID" property="despatchPlanId" jdbcType="VARCHAR" />
+    <result column="MOUNT" property="mount" jdbcType="INTEGER" />
+    <result column="RECORD_ID" property="recordId" jdbcType="VARCHAR" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="MAIN_DRIVE" property="mainDrive" jdbcType="VARCHAR" />
+    <result column="MAIN_DRIVE_PHONE" property="mainDrivePhone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Desplan_Return_List">
+  	  cd.CONSIGN_DETAIL_ID "consignDetailId",
+  	  c.CONSIGN_NO "consignNo", cd.CAR_BRAND "carBrand", cd.CAR_MODEL "carModel", 
+      cd.AMOUNT "amount", cd.CHASSIS_NO "chassisNo", 
+      cd.DESPATCH_DATE "despatchDate",c.LOCATION_TO "locationTo", c.RECEIVE_ORG_NAME "receiveOrgName", 
+      c.CONSIGN_ORG_NAME "consignOrgName", 
+      c.LOCATION_FROM "locationFrom",r.CARRIER_NAME "carrierName",r.TRANSPORT_TOOL "transportTool"
+  </sql>
+   <select id="searchDispatchInfo" resultType="hashMap"
+		parameterType="com.erp.trans.common.entity.Pager">
+		select
+		<include refid="Desplan_Return_List"></include>
+		from tb_consign_detail cd
+		left join tb_consign c on cd.consign_id = c.consign_id
+		left join tb_despatch_plan dp on cd.despatch_plan_id = dp.despatch_plan_id
+		left join td_record_info r on dp.record_id = r.record_id
+		<where>
+			<if test="conditiions.orgId != null and conditiions.orgId != '0' and conditiions.orgId != '-1'">
+				and c.ORG_ID = #{conditiions.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="conditiions.consignNo != null and conditiions.consignNo != ''">
+				and  <![CDATA[   regexp_like(c.consign_no, #{conditiions.consignNo,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.chassisNo != null and conditiions.chassisNo != ''">
+				and  <![CDATA[   regexp_like(cd.CHASSIS_NO, #{conditiions.chassisNo,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.locationFrom != null and conditiions.locationFrom != ''">
+				and  c.LOCATION_FROM = #{conditiions.chassisNo,jdbcType=VARCHAR})
+			</if>
+			<if test="conditiions.locationTo != null and conditiions.locationTo != ''">
+				and  c.LOCATION_TO = #{conditiions.locationTo,jdbcType=VARCHAR})
+			</if>
+			<if test="conditiions.dispatchFstate != null and conditiions.dispatchFstate != ''">
+				and cd.dispatch_fstate = #{conditiions.dispatchFstate,jdbcType=VARCHAR}
+			</if>
+			<if test="conditiions.createDateStart != null and conditiions.createDateStart != ''">
+				and <![CDATA[ date_format(c.create_date,'%Y-%m-%d') >= #{conditiions.createDateStart,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="conditiions.createDateEnd != null and conditiions.createDateEnd != ''">
+				and <![CDATA[ date_format(c.create_date,'%Y-%m-%d') <=  #{conditiions.createDateEnd,jdbcType=VARCHAR} ]]>
+			</if>
+		</where>
+		order by date_format(cd.MODIFY_DATE,'%Y-%m-%d %T') desc
+	</select>
+  <insert id="insert" parameterType="com.erp.trans.entity.DespatchPlan" >
+    insert into TB_DESPATCH_PLAN (DESPATCH_PLAN_ID, MOUNT, RECORD_ID, 
+       MODIFY_DATE, MODIFY_USER_ID, 
+      ORG_ID)
+    values (#{despatchPlanId,jdbcType=VARCHAR}, #{mount,jdbcType=INTEGER}, #{recordId,jdbcType=VARCHAR}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, 
+      #{orgId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.trans.entity.DespatchPlan" >
+    insert into TB_DESPATCH_PLAN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="despatchPlanId != null" >
+        DESPATCH_PLAN_ID,
+      </if>
+      <if test="mount != null" >
+        MOUNT,
+      </if>
+      <if test="recordId != null" >
+        RECORD_ID,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+      <if test="modifyUserId != null" >
+        MODIFY_USER_ID,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="despatchPlanId != null" >
+        #{despatchPlanId,jdbcType=VARCHAR},
+      </if>
+      <if test="mount != null" >
+        #{mount,jdbcType=INTEGER},
+      </if>
+      <if test="recordId != null" >
+        #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

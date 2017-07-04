@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.trans.dao.StaticDataMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.StaticData" >
+    <result column="STATIC_ID" property="staticId" jdbcType="VARCHAR" />
+    <result column="STATIC_CLASS" property="staticClass" jdbcType="VARCHAR" />
+    <result column="STATIC_CODE" property="staticCode" jdbcType="VARCHAR" />
+    <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+    <result column="STATIC_NAME" property="staticName" jdbcType="VARCHAR" />
+    <result column="FQUN" property="fqun" jdbcType="VARCHAR" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <!--[对应下拉框] 查询系统中所有的城市，用于起运地和目的地的选择  -->
+  <select id="searchLocationsForSelect" resultType="hashMap" parameterType="com.erp.trans.common.entity.Pager">
+		select s.static_code "id",s.static_name "text"
+		from td_static_data s 
+		<where>
+			s.static_class = '市代码'
+			<if test="conditiions !=null">
+				<if test="conditiions.searchParams !=null and conditiions.searchParams !=''">
+				    and (regexp_like(s.static_name, #{conditiions.searchParams, jdbcType=VARCHAR})
+					or regexp_like(s.fqun, #{conditiions.searchParams, jdbcType=VARCHAR}))
+				</if>
+			</if>
+		</where> 
+		order by s.fqun
+    </select>
+    
+     <!--[对应下拉框] 查询系统中所有的城市，用于起运地和目的地的选择  -->
+  <select id="carFindForSelect" resultType="hashMap" parameterType="com.erp.trans.common.entity.Pager">
+		select 
+			<if test="conditiions.type !=null and conditiions.type =='brand'">
+			car.brand_id "id",car.brand_name "text"
+			from td_brand
+			</if>
+			<if test="conditiions.type !=null and conditiions.type =='model'">
+			car.series_id "id",car.series_name "text"
+			from td_series 
+			</if>
+		car
+		<where>
+			<if test="conditiions.type !=null and conditiions.type =='brand'">
+				<if test="conditiions.searchParams !=null and conditiions.searchParams !=''">
+				    and regexp_like(car.brand_name, #{conditiions.searchParams, jdbcType=VARCHAR})				
+				</if>
+			</if>
+			<if test="conditiions.type !=null and conditiions.type =='model'">
+				<if test="conditiions.searchParams !=null and conditiions.searchParams !=''">
+				    and regexp_like(car.series_name, #{conditiions.searchParams, jdbcType=VARCHAR})
+				</if>
+				<if test="conditiions.pid !=null and conditiions.pid !=''">
+				    and car.brand_id = #{conditiions.pid, jdbcType=VARCHAR}
+				</if>
+			</if>
+		</where> 
+		<if test="conditiions.type !=null and conditiions.type =='brand'">
+		order by car.BRAND_FIRST_LETTER 
+		</if>
+		<if test="conditiions.type !=null and conditiions.type =='model'">
+		order by car.SERIES_FIRST_LETTER
+		</if>
+    </select>
+    
+  <insert id="insert" parameterType="com.erp.trans.entity.StaticData" >
+    insert into TD_STATIC_DATA (STATIC_ID, STATIC_CLASS, STATIC_CODE, 
+      PARENT_CODE, STATIC_NAME, FQUN, 
+      MODIFY_DATE, MODIFY_USER_ID)
+    values (#{staticId,jdbcType=VARCHAR}, #{staticClass,jdbcType=VARCHAR}, #{staticCode,jdbcType=VARCHAR}, 
+      #{parentCode,jdbcType=VARCHAR}, #{staticName,jdbcType=VARCHAR}, #{fqun,jdbcType=VARCHAR}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.trans.entity.StaticData" >
+    insert into TD_STATIC_DATA
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="staticId != null" >
+        STATIC_ID,
+      </if>
+      <if test="staticClass != null" >
+        STATIC_CLASS,
+      </if>
+      <if test="staticCode != null" >
+        STATIC_CODE,
+      </if>
+      <if test="parentCode != null" >
+        PARENT_CODE,
+      </if>
+      <if test="staticName != null" >
+        STATIC_NAME,
+      </if>
+      <if test="fqun != null" >
+        FQUN,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+      <if test="modifyUserId != null" >
+        MODIFY_USER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="staticId != null" >
+        #{staticId,jdbcType=VARCHAR},
+      </if>
+      <if test="staticClass != null" >
+        #{staticClass,jdbcType=VARCHAR},
+      </if>
+      <if test="staticCode != null" >
+        #{staticCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="staticName != null" >
+        #{staticName,jdbcType=VARCHAR},
+      </if>
+      <if test="fqun != null" >
+        #{fqun,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

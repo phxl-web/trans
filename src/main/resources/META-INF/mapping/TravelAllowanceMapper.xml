@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.trans.dao.TravelAllowanceMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.TravelAllowance" >
+    <result column="TRAVEL_ALLOWANCE_ID" property="travelAllowanceId" jdbcType="VARCHAR" />
+    <result column="TRAVEL_DATE" property="travelDate" jdbcType="TIMESTAMP" />
+    <result column="TRAVEL_TYPE" property="travelType" jdbcType="VARCHAR" />
+    <result column="TRAVELERS" property="travelers" jdbcType="VARCHAR" />
+    <result column="TRAVEL_AMOUNT" property="travelAmount" jdbcType="VARCHAR" />
+    <result column="REIMBURSE_PERSON" property="reimbursePerson" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USERID" property="modifyUserid" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.erp.trans.entity.TravelAllowance" >
+    insert into TB_TRAVEL_ALLOWANCE (TRAVEL_ALLOWANCE_ID, TRAVEL_DATE, 
+      TRAVEL_TYPE, TRAVELERS, TRAVEL_AMOUNT, 
+      REIMBURSE_PERSON, REMARK, MODIFY_DATE, 
+      MODIFY_USERID, ORG_ID)
+    values (#{travelAllowanceId,jdbcType=VARCHAR}, #{travelDate,jdbcType=TIMESTAMP}, 
+      #{travelType,jdbcType=VARCHAR}, #{travelers,jdbcType=VARCHAR}, #{travelAmount,jdbcType=VARCHAR}, 
+      #{reimbursePerson,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{modifyUserid,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.trans.entity.TravelAllowance" >
+    insert into TB_TRAVEL_ALLOWANCE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="travelAllowanceId != null" >
+        TRAVEL_ALLOWANCE_ID,
+      </if>
+      <if test="travelDate != null" >
+        TRAVEL_DATE,
+      </if>
+      <if test="travelType != null" >
+        TRAVEL_TYPE,
+      </if>
+      <if test="travelers != null" >
+        TRAVELERS,
+      </if>
+      <if test="travelAmount != null" >
+        TRAVEL_AMOUNT,
+      </if>
+      <if test="reimbursePerson != null" >
+        REIMBURSE_PERSON,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+      <if test="modifyUserid != null" >
+        MODIFY_USERID,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="travelAllowanceId != null" >
+        #{travelAllowanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="travelDate != null" >
+        #{travelDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="travelType != null" >
+        #{travelType,jdbcType=VARCHAR},
+      </if>
+      <if test="travelers != null" >
+        #{travelers,jdbcType=VARCHAR},
+      </if>
+      <if test="travelAmount != null" >
+        #{travelAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="reimbursePerson != null" >
+        #{reimbursePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserid != null" >
+        #{modifyUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

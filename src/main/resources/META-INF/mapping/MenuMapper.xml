@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.trans.dao.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.Menu">
+    <result column="MENU_ID" jdbcType="VARCHAR" property="menuId" />
+    <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
+    <result column="MENU_URL" jdbcType="VARCHAR" property="menuUrl" />
+    <result column="FSTATE" jdbcType="VARCHAR" property="fstate" />
+    <result column="TF_REMARK" jdbcType="VARCHAR" property="tfRemark" />
+    <result column="MODIFY_TIME" jdbcType="DATE" property="modifyTime" />
+    <result column="CREATE_TIME" jdbcType="DATE" property="createTime" />
+    <result column="CREATE_USERID" jdbcType="VARCHAR" property="createUserid" />
+    <result column="MODIFY_USERID" jdbcType="VARCHAR" property="modifyUserid" />
+    <result column="PARENT_MENUID" jdbcType="VARCHAR" property="parentMenuid" />
+    <result column="FSORT" jdbcType="VARCHAR" property="fsort" />
+    <result column="MENU_CODE" jdbcType="VARCHAR" property="menuCode" />
+  </resultMap>
+</mapper>

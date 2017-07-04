@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.trans.dao.RecordInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.RecordInfo" >
+    <id column="RECORD_ID" property="recordId" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="RECORD_TYPE" property="recordType" jdbcType="VARCHAR" />
+    <result column="TRANSPORT_TOOL" property="transportTool" jdbcType="VARCHAR" />
+    <result column="TRAILER_NO" property="trailerNo" jdbcType="VARCHAR" />
+    <result column="LOAD_AMOUNT" property="loadAmount" jdbcType="INTEGER" />
+    <result column="CARRIER_ID" property="carrierId" jdbcType="VARCHAR" />
+    <result column="CARRIER_NAME" property="carrierName" jdbcType="VARCHAR" />
+    <result column="CARRIER_TYPE" property="carrierType" jdbcType="VARCHAR" />
+    <result column="MAIN_DRIVE" property="mainDrive" jdbcType="VARCHAR" />
+    <result column="MAIN_DRIVE_PHONE" property="mainDrivePhone" jdbcType="VARCHAR" />
+    <result column="CO_PILOT" property="coPilot" jdbcType="VARCHAR" />
+    <result column="CO_PILOT_PHONE" property="coPilotPhone" jdbcType="VARCHAR" />
+    <result column="RECORD_START" property="recordStart" jdbcType="DATE" />
+    <result column="RECORD_END" property="recordEnd" jdbcType="DATE" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR" />
+    <result column="REGISTER_DATE" property="registerDate" jdbcType="TIMESTAMP" />
+    <result column="INSURANCE_DATE" property="insuranceDate" jdbcType="TIMESTAMP" />
+    <result column="REPAYMENT_DAY" property="repaymentDay" jdbcType="VARCHAR" />
+    <result column="REPAYMENT_AMOUNT" property="repaymentAmount" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RECORD_ID, ORG_ID, RECORD_TYPE, TRANSPORT_TOOL, TRAILER_NO, LOAD_AMOUNT, CARRIER_ID, 
+    CARRIER_NAME, CARRIER_TYPE, MAIN_DRIVE, MAIN_DRIVE_PHONE, CO_PILOT, CO_PILOT_PHONE, 
+    RECORD_START, RECORD_END, MODIFY_DATE, MODIFY_USER_ID
+  </sql>
+   <!--[对应下拉框] 查询系统中在某个机构的轿运车档案信息  -->
+  <select id="searchCarriersForSelectByOrg" resultType="hashMap" parameterType="com.erp.trans.common.entity.Pager">
+		select distinct r.carrier_id "id",r.carrier_name "text"
+		from td_record_info r
+		<where>
+		    r.org_id = #{conditiions.orgId, jdbcType=VARCHAR}
+			<if test="conditiions !=null">
+				<if test="conditiions.searchParams !=null and conditiions.searchParams !=''">
+				    and regexp_like(r.CARRIER_NAME, #{conditiions.searchParams, jdbcType=VARCHAR})
+				</if>
+			</if>
+		</where> 
+		order by r.CARRIER_NAME
+    </select>
+  <!--[对应下拉框] 查询系统中在某个机构的某个承运商的所有轿运车  -->
+  <select id="searchRecordsForSelectByOrg" resultType="hashMap" parameterType="com.erp.trans.common.entity.Pager">
+		select distinct r.record_id "id",r.TRANSPORT_TOOL "text"
+		from td_record_info r
+		<where>
+		    r.org_id = #{conditiions.orgId, jdbcType=VARCHAR}
+		    and r.carrier_id = #{conditiions.carrierId, jdbcType=VARCHAR}
+			<if test="conditiions !=null">
+				<if test="conditiions.searchParams !=null and conditiions.searchParams !=''">
+				    and regexp_like(r.TRANSPORT_TOOL, #{conditiions.searchParams, jdbcType=VARCHAR})
+				</if>
+			</if>
+		</where> 
+		order by r.TRANSPORT_TOOL
+    </select>
+    
+    <select id="searchRecordInfo" resultMap="BaseResultMap"
+		parameterType="com.erp.trans.common.entity.Pager">
+		select <include refid="Base_Column_List"></include>
+		from tb_record_info r
+		<where>
+			<if test="conditiions.orgId != null and conditiions.orgId != '0' and conditiions.orgId != '-1'">
+				and r.ORG_ID = #{conditiions.orgId,jdbcType=varchar}
+			</if>
+			<if test="conditiions.trailerNo != null and conditiions.trailerNo != ''">
+				and  <![CDATA[   regexp_like(r.trailer_no, #{conditiions.trailerNo,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.carrierName != null and conditiions.carrierName != ''">
+				and  <![CDATA[   regexp_like(r.carrier_name, #{conditiions.carrierName,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.transportTool != null and conditiions.transportTool != ''">
+				and <![CDATA[   regexp_like(r.transport_tool, #{conditiions.transportTool,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.mainDrive != null and conditiions.mainDrive != ''">
+				and <![CDATA[   regexp_like(r.main_drive, #{conditiions.mainDrive,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.coPilot!= null and conditiions.coPilot != ''">
+				and <![CDATA[   regexp_like(r.co_pilot, #{conditiions.coPilot,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.recordStart != null and conditiions.recordStart != ''">
+				and  <![CDATA[ date_format(r.record_start,'%Y-%m-%d') >= #{conditiions.recordStart,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="conditiions.recordEnd != null and conditiions.recordEnd != ''">
+				and  <![CDATA[ date_format(r.record_end,'%Y-%m-%d') <=  #{conditiions.recordEnd,jdbcType=VARCHAR} ]]>
+			</if>
+		</where>
+		order by date_format(r.MODIFY_DATE,'%Y-%m-%d %T') desc
+	</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TD_RECORD_INFO
+    where RECORD_ID = #{recordId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TD_RECORD_INFO
+    where RECORD_ID = #{recordId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erp.trans.entity.RecordInfo" >
+    insert into TD_RECORD_INFO (RECORD_ID, ORG_ID, RECORD_TYPE, 
+      TRANSPORT_TOOL, TRAILER_NO, LOAD_AMOUNT, 
+      CARRIER_ID, CARRIER_NAME, CARRIER_TYPE, 
+      MAIN_DRIVE, MAIN_DRIVE_PHONE, CO_PILOT, 
+      CO_PILOT_PHONE, RECORD_START, RECORD_END, 
+      MODIFY_DATE, MODIFY_USER_ID)
+    values (#{recordId,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{recordType,jdbcType=VARCHAR}, 
+      #{transportTool,jdbcType=VARCHAR}, #{trailerNo,jdbcType=VARCHAR}, #{loadAmount,jdbcType=INTEGER}, 
+      #{carrierId,jdbcType=VARCHAR}, #{carrierName,jdbcType=VARCHAR}, #{carrierType,jdbcType=VARCHAR}, 
+      #{mainDrive,jdbcType=VARCHAR}, #{mainDrivePhone,jdbcType=VARCHAR}, #{coPilot,jdbcType=VARCHAR}, 
+      #{coPilotPhone,jdbcType=VARCHAR}, #{recordStart,jdbcType=DATE}, #{recordEnd,jdbcType=DATE}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.trans.entity.RecordInfo" >
+    insert into TD_RECORD_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        RECORD_ID,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="recordType != null" >
+        RECORD_TYPE,
+      </if>
+      <if test="transportTool != null" >
+        TRANSPORT_TOOL,
+      </if>
+      <if test="trailerNo != null" >
+        TRAILER_NO,
+      </if>
+      <if test="loadAmount != null" >
+        LOAD_AMOUNT,
+      </if>
+      <if test="carrierId != null" >
+        CARRIER_ID,
+      </if>
+      <if test="carrierName != null" >
+        CARRIER_NAME,
+      </if>
+      <if test="carrierType != null" >
+        CARRIER_TYPE,
+      </if>
+      <if test="mainDrive != null" >
+        MAIN_DRIVE,
+      </if>
+      <if test="mainDrivePhone != null" >
+        MAIN_DRIVE_PHONE,
+      </if>
+      <if test="coPilot != null" >
+        CO_PILOT,
+      </if>
+      <if test="coPilotPhone != null" >
+        CO_PILOT_PHONE,
+      </if>
+      <if test="recordStart != null" >
+        RECORD_START,
+      </if>
+      <if test="recordEnd != null" >
+        RECORD_END,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+      <if test="modifyUserId != null" >
+        MODIFY_USER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null" >
+        #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="transportTool != null" >
+        #{transportTool,jdbcType=VARCHAR},
+      </if>
+      <if test="trailerNo != null" >
+        #{trailerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="loadAmount != null" >
+        #{loadAmount,jdbcType=INTEGER},
+      </if>
+      <if test="carrierId != null" >
+        #{carrierId,jdbcType=VARCHAR},
+      </if>
+      <if test="carrierName != null" >
+        #{carrierName,jdbcType=VARCHAR},
+      </if>
+      <if test="carrierType != null" >
+        #{carrierType,jdbcType=VARCHAR},
+      </if>
+      <if test="mainDrive != null" >
+        #{mainDrive,jdbcType=VARCHAR},
+      </if>
+      <if test="mainDrivePhone != null" >
+        #{mainDrivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="coPilot != null" >
+        #{coPilot,jdbcType=VARCHAR},
+      </if>
+      <if test="coPilotPhone != null" >
+        #{coPilotPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStart != null" >
+        #{recordStart,jdbcType=DATE},
+      </if>
+      <if test="recordEnd != null" >
+        #{recordEnd,jdbcType=DATE},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.trans.entity.RecordInfo" >
+    update TD_RECORD_INFO
+    <set >
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null" >
+        RECORD_TYPE = #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="transportTool != null" >
+        TRANSPORT_TOOL = #{transportTool,jdbcType=VARCHAR},
+      </if>
+      <if test="trailerNo != null" >
+        TRAILER_NO = #{trailerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="loadAmount != null" >
+        LOAD_AMOUNT = #{loadAmount,jdbcType=INTEGER},
+      </if>
+      <if test="carrierId != null" >
+        CARRIER_ID = #{carrierId,jdbcType=VARCHAR},
+      </if>
+      <if test="carrierName != null" >
+        CARRIER_NAME = #{carrierName,jdbcType=VARCHAR},
+      </if>
+      <if test="carrierType != null" >
+        CARRIER_TYPE = #{carrierType,jdbcType=VARCHAR},
+      </if>
+      <if test="mainDrive != null" >
+        MAIN_DRIVE = #{mainDrive,jdbcType=VARCHAR},
+      </if>
+      <if test="mainDrivePhone != null" >
+        MAIN_DRIVE_PHONE = #{mainDrivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="coPilot != null" >
+        CO_PILOT = #{coPilot,jdbcType=VARCHAR},
+      </if>
+      <if test="coPilotPhone != null" >
+        CO_PILOT_PHONE = #{coPilotPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStart != null" >
+        RECORD_START = #{recordStart,jdbcType=DATE},
+      </if>
+      <if test="recordEnd != null" >
+        RECORD_END = #{recordEnd,jdbcType=DATE},
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        MODIFY_USER_ID = #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_ID = #{recordId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.trans.entity.RecordInfo" >
+    update TD_RECORD_INFO
+    set ORG_ID = #{orgId,jdbcType=VARCHAR},
+      RECORD_TYPE = #{recordType,jdbcType=VARCHAR},
+      TRANSPORT_TOOL = #{transportTool,jdbcType=VARCHAR},
+      TRAILER_NO = #{trailerNo,jdbcType=VARCHAR},
+      LOAD_AMOUNT = #{loadAmount,jdbcType=INTEGER},
+      CARRIER_ID = #{carrierId,jdbcType=VARCHAR},
+      CARRIER_NAME = #{carrierName,jdbcType=VARCHAR},
+      CARRIER_TYPE = #{carrierType,jdbcType=VARCHAR},
+      MAIN_DRIVE = #{mainDrive,jdbcType=VARCHAR},
+      MAIN_DRIVE_PHONE = #{mainDrivePhone,jdbcType=VARCHAR},
+      CO_PILOT = #{coPilot,jdbcType=VARCHAR},
+      CO_PILOT_PHONE = #{coPilotPhone,jdbcType=VARCHAR},
+      RECORD_START = #{recordStart,jdbcType=DATE},
+      RECORD_END = #{recordEnd,jdbcType=DATE},
+      MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      MODIFY_USER_ID = #{modifyUserId,jdbcType=VARCHAR}
+    where RECORD_ID = #{recordId,jdbcType=VARCHAR}
+  </update>
+</mapper>

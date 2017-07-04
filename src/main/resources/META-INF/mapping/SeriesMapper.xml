@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.trans.dao.SeriesMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.Series" >
+    <result column="SERIES_ID" property="seriesId" jdbcType="VARCHAR" />
+    <result column="SERIES_NAME" property="seriesName" jdbcType="VARCHAR" />
+    <result column="SERIES_FIRST_LETTER" property="seriesFirstLetter" jdbcType="VARCHAR" />
+    <result column="BRAND_ID" property="brandId" jdbcType="VARCHAR" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR" />
+     <result column="SERIES_ORDER" property="seriesOrder" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.erp.trans.entity.Series" >
+    insert into TD_SERIES (SERIES_ID, SERIES_NAME, SERIES_FIRST_LETTER, 
+      BRAND_ID, MODIFY_DATE, MODIFY_USER_ID
+      )
+    values (#{seriesId,jdbcType=VARCHAR}, #{seriesName,jdbcType=VARCHAR}, #{seriesFirstLetter,jdbcType=VARCHAR}, 
+      #{brandId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.trans.entity.Series" >
+    insert into TD_SERIES
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="seriesId != null" >
+        SERIES_ID,
+      </if>
+      <if test="seriesName != null" >
+        SERIES_NAME,
+      </if>
+      <if test="seriesFirstLetter != null" >
+        SERIES_FIRST_LETTER,
+      </if>
+      <if test="brandId != null" >
+        BRAND_ID,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+      <if test="modifyUserId != null" >
+        MODIFY_USER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="seriesId != null" >
+        #{seriesId,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesName != null" >
+        #{seriesName,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesFirstLetter != null" >
+        #{seriesFirstLetter,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        #{brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

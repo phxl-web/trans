@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.trans.dao.OrgInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.OrgInfo" >
+    <id column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ORG_ALIAS" property="orgAlias" jdbcType="VARCHAR" />
+    <result column="FQUN" property="fqun" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="TF_PROVINCE" property="tfProvince" jdbcType="VARCHAR" />
+    <result column="TF_CITY" property="tfCity" jdbcType="VARCHAR" />
+    <result column="TF_DISTRICT" property="tfDistrict" jdbcType="VARCHAR" />
+    <result column="TF_ADDRESS" property="tfAddress" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="FSTATE" property="fstate" jdbcType="VARCHAR" />
+    <result column="ORG_TYPE" property="orgType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ORG_ID, ORG_NAME, ORG_ALIAS, FQUN, PARENT_ID, TF_PROVINCE, TF_CITY, TF_DISTRICT, 
+    TF_ADDRESS, CREATE_DATE, MODIFY_DATE
+  </sql>
+  
+  <!--[对应下拉框] 根据查询参数查询机构信息  -->
+  <select id="searchOrgForSelect" resultType="hashMap" parameterType="com.erp.trans.common.entity.Pager">
+		select o.org_id "id",o.org_name "text"
+		from td_org_info o
+		<where>
+			o.fstate = '01'
+			<if test="conditiions !=null">
+				<if test="conditiions.searchParams !=null and conditiions.searchParams !=''">
+				    and (regexp_like(o.org_name, #{conditiions.searchParams, jdbcType=VARCHAR})
+					or regexp_like(o.org_ailias, #{conditiions.searchParams, jdbcType=VARCHAR}))
+				</if>
+				<if test="conditiions.orgType !=null and conditiions.orgType !=''">
+				    and o.org_type = #{conditiions.orgType, jdbcType=VARCHAR}
+				</if>
+			</if>
+		</where> 
+		order by o.org_name
+    </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TD_ORG_INFO
+    where ORG_ID = #{orgId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TD_ORG_INFO
+    where ORG_ID = #{orgId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erp.trans.entity.OrgInfo" >
+    insert into TD_ORG_INFO (ORG_ID, ORG_NAME, ORG_ALIAS, 
+      FQUN, PARENT_ID, TF_PROVINCE, 
+      TF_CITY, TF_DISTRICT, TF_ADDRESS, 
+      CREATE_DATE, MODIFY_DATE)
+    values (#{orgId,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{orgAlias,jdbcType=VARCHAR}, 
+      #{fqun,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{tfProvince,jdbcType=VARCHAR}, 
+      #{tfCity,jdbcType=VARCHAR}, #{tfDistrict,jdbcType=VARCHAR}, #{tfAddress,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.trans.entity.OrgInfo" >
+    insert into TD_ORG_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="orgAlias != null" >
+        ORG_ALIAS,
+      </if>
+      <if test="fqun != null" >
+        FQUN,
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID,
+      </if>
+      <if test="tfProvince != null" >
+        TF_PROVINCE,
+      </if>
+      <if test="tfCity != null" >
+        TF_CITY,
+      </if>
+      <if test="tfDistrict != null" >
+        TF_DISTRICT,
+      </if>
+      <if test="tfAddress != null" >
+        TF_ADDRESS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAlias != null" >
+        #{orgAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="fqun != null" >
+        #{fqun,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="tfProvince != null" >
+        #{tfProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="tfCity != null" >
+        #{tfCity,jdbcType=VARCHAR},
+      </if>
+      <if test="tfDistrict != null" >
+        #{tfDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="tfAddress != null" >
+        #{tfAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.trans.entity.OrgInfo" >
+    update TD_ORG_INFO
+    <set >
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAlias != null" >
+        ORG_ALIAS = #{orgAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="fqun != null" >
+        FQUN = #{fqun,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="tfProvince != null" >
+        TF_PROVINCE = #{tfProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="tfCity != null" >
+        TF_CITY = #{tfCity,jdbcType=VARCHAR},
+      </if>
+      <if test="tfDistrict != null" >
+        TF_DISTRICT = #{tfDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="tfAddress != null" >
+        TF_ADDRESS = #{tfAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ORG_ID = #{orgId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.trans.entity.OrgInfo" >
+    update TD_ORG_INFO
+    set ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      ORG_ALIAS = #{orgAlias,jdbcType=VARCHAR},
+      FQUN = #{fqun,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      TF_PROVINCE = #{tfProvince,jdbcType=VARCHAR},
+      TF_CITY = #{tfCity,jdbcType=VARCHAR},
+      TF_DISTRICT = #{tfDistrict,jdbcType=VARCHAR},
+      TF_ADDRESS = #{tfAddress,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP}
+    where ORG_ID = #{orgId,jdbcType=VARCHAR}
+  </update>
+</mapper>

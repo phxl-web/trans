@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.trans.dao.ContractMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.Contract" >
+    <result column="CONTRACT_ID" property="contractId" jdbcType="VARCHAR" />
+    <result column="CONTRACT_TYPE" property="contractType" jdbcType="VARCHAR" />
+    <result column="CONSIGN_ORG_ID" property="consignOrgId" jdbcType="VARCHAR" />
+    <result column="CONSIGN_ORG_NAME" property="consignOrgName" jdbcType="VARCHAR" />
+    <result column="LOCATION_CONSIGN" property="locationConsign" jdbcType="VARCHAR" />
+    <result column="CARRIER_ID" property="carrierId" jdbcType="VARCHAR" />
+    <result column="CARRIER_NAME" property="carrierName" jdbcType="VARCHAR" />
+    <result column="LOCATION_FROM" property="locationFrom" jdbcType="VARCHAR" />
+    <result column="LOCATION_TO" property="locationTo" jdbcType="VARCHAR" />
+    <result column="CAR_BRAND" property="carBrand" jdbcType="VARCHAR" />
+    <result column="FREIGHT_RATES" property="freightRates" jdbcType="VARCHAR" />
+    <result column="CHARGE_PERIOD" property="chargePeriod" jdbcType="VARCHAR" />
+    <result column="CONTRACT_START" property="contractStart" jdbcType="DATE" />
+    <result column="CONTRACT_END" property="contractEnd" jdbcType="DATE" />
+    <result column="CONTRACT_FSTATE" property="contractFstate" jdbcType="VARCHAR" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="CAR_MODEL" property="carModel" jdbcType="VARCHAR" />
+    <result column="TEMP_CONPRICE" property="tempConprice" jdbcType="VARCHAR" /> 
+  </resultMap>
+  <sql id="Base_Column_List">
+      CONTRACT_ID, CONTRACT_TYPE, CONSIGN_ORG_ID, 
+      CONSIGN_ORG_NAME, LOCATION_CONSIGN, CARRIER_ID, 
+      CARRIER_NAME, LOCATION_FROM, LOCATION_TO, 
+      FREIGHT_RATES, CHARGE_PERIOD, 
+      CONTRACT_START, CONTRACT_END, CONTRACT_FSTATE, 
+      MODIFY_DATE, MODIFY_USER_ID, ORG_ID,CAR_BRAND,CAR_MODEL,TEMP_CONPRICE,MODIFY_USER_NAME
+  </sql>
+  <select id="searchContractInfo" resultMap="BaseResultMap"
+		parameterType="com.erp.trans.common.entity.Pager">
+		select <include refid="Base_Column_List"></include>
+		from tb_contract c
+		<where>
+			<if test="conditiions.contractType != null and conditiions.contractType != ''">
+				and c.contract_type = #{conditiions.contractType,jdbcType=VARCHAR}
+			</if>
+			<if test="conditiions.orgId != null and conditiions.orgId != '0' and conditiions.orgId != '-1'">
+				and c.ORG_ID = #{conditiions.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="conditiions.locationFrom != null and conditiions.locationFrom != ''">
+				and  c.location_from = #{conditiions.locationFrom,jdbcType=VARCHAR})
+			</if>
+			<if test="conditiions.locationTo != null and conditiions.locationTo != ''">
+				and  c.location_to = #{conditiions.locationTo,jdbcType=VARCHAR})
+			</if>
+			<if test="conditiions.carrierName != null and conditiions.carrierName != ''">
+				and  <![CDATA[   regexp_like(c.carrier_name, #{conditiions.carrierName,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.consignOrgName != null and conditiions.consignOrgName != ''">
+				and <![CDATA[   regexp_like(c.consign_org_name, #{conditiions.consignOrgName,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.contractStart != null and conditiions.contractStart != ''">
+				and  <![CDATA[ date_format(c.contract_start,'%Y-%m-%d') >= #{conditiions.contractStart,jdbcType=VARCHAR} ]]>
+			</if>
+			<if test="conditiions.contractEnd != null and conditiions.contractEnd != ''">
+				and  <![CDATA[ date_format(c.contract_end,'%Y-%m-%d') <=  #{conditiions.contractEnd,jdbcType=VARCHAR} ]]>
+			</if>
+		</where>
+		order by date_format(c.MODIFY_DATE,'%Y-%m-%d %T') desc
+	</select>
+  <insert id="insert" parameterType="com.erp.trans.entity.Contract" >
+    insert into TB_CONTRACT (CONTRACT_ID, CONTRACT_TYPE, CONSIGN_ORG_ID, 
+      CONSIGN_ORG_NAME, LOCATION_CONSIGN, CARRIER_ID, 
+      CARRIER_NAME, LOCATION_FROM, LOCATION_TO, 
+      MOTO_TYPE, FREIGHT_RATES, CHARGE_PERIOD, 
+      CONTRACT_START, CONTRACT_END, CONTRACT_FSTATE, 
+      MODIFY_DATE, MODIFY_USER_ID, ORG_ID
+      )
+    values (#{contractId,jdbcType=VARCHAR}, #{contractType,jdbcType=VARCHAR}, #{consignOrgId,jdbcType=VARCHAR}, 
+      #{consignOrgName,jdbcType=VARCHAR}, #{locationConsign,jdbcType=VARCHAR}, #{carrierId,jdbcType=VARCHAR}, 
+      #{carrierName,jdbcType=VARCHAR}, #{locationFrom,jdbcType=VARCHAR}, #{locationTo,jdbcType=VARCHAR}, 
+      #{motoType,jdbcType=VARCHAR}, #{freightRates,jdbcType=VARCHAR}, #{chargePeriod,jdbcType=VARCHAR}, 
+      #{contractStart,jdbcType=DATE}, #{contractEnd,jdbcType=DATE}, #{contractFstate,jdbcType=VARCHAR}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.trans.entity.Contract" >
+    insert into TB_CONTRACT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="contractId != null" >
+        CONTRACT_ID,
+      </if>
+      <if test="contractType != null" >
+        CONTRACT_TYPE,
+      </if>
+      <if test="consignOrgId != null" >
+        CONSIGN_ORG_ID,
+      </if>
+      <if test="consignOrgName != null" >
+        CONSIGN_ORG_NAME,
+      </if>
+      <if test="locationConsign != null" >
+        LOCATION_CONSIGN,
+      </if>
+      <if test="carrierId != null" >
+        CARRIER_ID,
+      </if>
+      <if test="carrierName != null" >
+        CARRIER_NAME,
+      </if>
+      <if test="locationFrom != null" >
+        LOCATION_FROM,
+      </if>
+      <if test="locationTo != null" >
+        LOCATION_TO,
+      </if>
+      <if test="motoType != null" >
+        MOTO_TYPE,
+      </if>
+      <if test="freightRates != null" >
+        FREIGHT_RATES,
+      </if>
+      <if test="chargePeriod != null" >
+        CHARGE_PERIOD,
+      </if>
+      <if test="contractStart != null" >
+        CONTRACT_START,
+      </if>
+      <if test="contractEnd != null" >
+        CONTRACT_END,
+      </if>
+      <if test="contractFstate != null" >
+        CONTRACT_FSTATE,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+      <if test="modifyUserId != null" >
+        MODIFY_USER_ID,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="contractId != null" >
+        #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="contractType != null" >
+        #{contractType,jdbcType=VARCHAR},
+      </if>
+      <if test="consignOrgId != null" >
+        #{consignOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="consignOrgName != null" >
+        #{consignOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="locationConsign != null" >
+        #{locationConsign,jdbcType=VARCHAR},
+      </if>
+      <if test="carrierId != null" >
+        #{carrierId,jdbcType=VARCHAR},
+      </if>
+      <if test="carrierName != null" >
+        #{carrierName,jdbcType=VARCHAR},
+      </if>
+      <if test="locationFrom != null" >
+        #{locationFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="locationTo != null" >
+        #{locationTo,jdbcType=VARCHAR},
+      </if>
+      <if test="motoType != null" >
+        #{motoType,jdbcType=VARCHAR},
+      </if>
+      <if test="freightRates != null" >
+        #{freightRates,jdbcType=VARCHAR},
+      </if>
+      <if test="chargePeriod != null" >
+        #{chargePeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="contractStart != null" >
+        #{contractStart,jdbcType=DATE},
+      </if>
+      <if test="contractEnd != null" >
+        #{contractEnd,jdbcType=DATE},
+      </if>
+      <if test="contractFstate != null" >
+        #{contractFstate,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

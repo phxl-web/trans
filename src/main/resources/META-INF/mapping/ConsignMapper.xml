@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.trans.dao.ConsignMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.Consign" >
+    <id column="CONSIGN_ID" property="consignId" jdbcType="VARCHAR" />
+    <result column="CONSIGN_NO" property="consignNo" jdbcType="VARCHAR" />
+    <result column="CAMOUNT" property="camount" jdbcType="INTEGER" />
+    <result column="LOCATION_TO" property="locationTo" jdbcType="VARCHAR" />
+    <result column="RECEIVE_ORG_ID" property="receiveOrgId" jdbcType="VARCHAR" />
+    <result column="RECEIVE_ORG_NAME" property="receiveOrgName" jdbcType="VARCHAR" />
+    <result column="CONSIGN_FSATE" property="consignFsate" jdbcType="VARCHAR" />
+    <result column="CONSIGN_ORG_ID" property="consignOrgId" jdbcType="VARCHAR" />
+    <result column="CONSIGN_ORG_NAME" property="consignOrgName" jdbcType="VARCHAR" />
+    <result column="LOCATION_FROM" property="locationFrom" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Consign_Return_List">
+      c.CONSIGN_ID "consignId",  c.CONSIGN_NO "consignNo",  c.CAMOUNT "camount", 
+       c.LOCATION_TO "locationTo",  c.RECEIVE_ORG_ID "receiveOrgId",  c.RECEIVE_ORG_NAME "receiveOrgName", 
+       c.CONSIGN_FSATE "consignFsate",  c.CONSIGN_ORG_ID "consignOrgId",  c.CONSIGN_ORG_NAME "consignOrgName", 
+       c.LOCATION_FROM "lactionFrom",  date_format(c.MODIFY_DATE,'%Y-%m-%d %T') "modifyDate", 
+      u.USER_NAME "modifyUser"
+  </sql>
+   <insert id="importConsigns" >
+    insert into tb_consign (CONSIGN_ID, CONSIGN_NO, CAMOUNT, 
+      LOCATION_TO, RECEIVE_ORG_ID, RECEIVE_ORG_NAME, 
+      CONSIGN_FSATE, CONSIGN_ORG_ID, CONSIGN_ORG_NAME, 
+      LOCATION_FROM, CREATE_DATE, MODIFY_DATE, 
+      CREATE_USER_ID, MODIFY_USER_ID, ORG_ID
+      )  values
+    <foreach collection="list" index="index" open="(" close=")" separator="),("> 
+      #{list[${index}].consignId,jdbcType=VARCHAR}, #{list[${index}].consignNo,jdbcType=VARCHAR}, #{list[${index}].camount,jdbcType=INTEGER}, 
+      #{list[${index}].locationTo,jdbcType=VARCHAR}, #{list[${index}].receiveOrgId,jdbcType=VARCHAR},   #{list[${index}].receiveOrgName,jdbcType=VARCHAR}, 
+      #{list[${index}].consignFsate,jdbcType=VARCHAR}, #{list[${index}].consignOrgId,jdbcType=VARCHAR}, #{list[${index}].consignOrgName,jdbcType=VARCHAR}, 
+      #{list[${index}].locationFrom,jdbcType=VARCHAR}, #{list[${index}].createDate,jdbcType=TIMESTAMP}, #{list[${index}].modifyDate,jdbcType=TIMESTAMP}, 
+      #{list[${index}].createUserId,jdbcType=VARCHAR}, #{list[${index}].modifyUserId,jdbcType=VARCHAR},  #{list[${index}].orgId,jdbcType=VARCHAR}
+     </foreach> 
+  </insert>
+  
+  <select id="findConsignList" resultType="hashMap"
+		parameterType="com.erp.trans.common.entity.Pager">
+		select
+		<include refid="Consign_Return_List"></include>
+		from tb_consign c
+		left join ts_user_info u on u.user_id = c.MODIFY_USER_ID
+		<where>
+			<if test="conditiions.orgId != null and conditiions.orgId != '0' and conditiions.orgId != '-1'">
+				and c.ORG_ID = #{conditiions.orgId,jdbcType=varchar}
+			</if>
+			<if test="conditiions.consignNo != null and conditiions.consignNo != ''">
+				and  <![CDATA[   regexp_like(c.consign_no, #{conditiions.consignNo,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.carrierName != null and conditiions.carrierName != ''">
+				and  <![CDATA[   regexp_like(, #{conditiions.carrierName,jdbcType=VARCHAR}) ]]>
+			</if>
+			<if test="conditiions.consignFstate != null and conditiions.consignFstate != ''">
+				and c.CONSIGN_FSATE = #{conditiions.consignFstate,jdbcType=VARCHAR}
+			</if>
+			<if test="conditiions.dispatchDateStart != null and conditiions.dispatchDateStart != ''">
+				and exists (select 0 from tb_consign_detail cd where cd.consign_id = c.consign_id and <![CDATA[ date_format(cd.DISPATCH_DATE,'%Y-%m-%d') >= #{conditiions.dispatchDateStart,jdbcType=VARCHAR} ]]>)
+			</if>
+			<if test="conditiions.dispatchDateEnd != null and conditiions.dispatchDateEnd != ''">
+				and exists (select 0 from tb_consign_detail cd where cd.consign_id = c.consign_id and <![CDATA[ date_format(cd.DISPATCH_DATE,'%Y-%m-%d') <=  #{conditiions.dispatchDateEnd,jdbcType=VARCHAR} ]]>)
+			</if>
+		</where>
+		order by date_format(c.MODIFY_DATE,'%Y-%m-%d %T') desc
+	</select>
+
+  <update id="updateConsign">
+ update td_consign set
+    consign_fsate=
+  <foreach collection="consigns" item="item" index="index" separator=" " open="case consign_id" close="end">
+      when #{item.consignId,jdbcType=VARCHAR} then #{item.consignFsate,jdbcType=VARCHAR}
+  </foreach>
+  ,MODIFY_USER_ID=
+  <foreach collection="consigns" item="item" index="index" separator=" " open="case consign_id" close="end">
+      when #{item.consignId,jdbcType=VARCHAR} then #{item.modifyUserId,jdbcType=VARCHAR}
+  </foreach>
+  ,MODIFY_DATE=
+  <foreach collection="consigns" item="item" index="index" separator=" " open="case consign_id" close="end">
+      when #{item.consignId,jdbcType=VARCHAR} then #{item.modifyDate,jdbcType=TIMESTAMP}
+  </foreach>
+  where consign_id in
+  <foreach collection="consigns" index="index" item="item" separator="," open="(" close=")">
+      #{item.consignId,jdbcType=VARCHAR}
+  </foreach>
+  </update>
+  
+  <delete id="clearNoUseConsign">
+  		delete from tb_consign
+  		where consign_id not in(
+  			select distinct consign_id from tb_consign_detail
+  		)
+  </delete>
+  <insert id="insert" parameterType="com.erp.trans.entity.Consign" >
+    insert into tb_consign (CONSIGN_ID, CONSIGN_NO, CAMOUNT, 
+      LOCATION_TO, RECEIVE_ORG_ID, RECEIVE_ORG_NAME, 
+      CONSIGN_FSATE, CONSIGN_ORG_ID, CONSIGN_ORG_NAME, 
+      LOCATION_FROM, CREATE_DATE, MODIFY_DATE, 
+      CREATE_USER_ID, MODIFY_USER_ID, ORG_ID
+      )
+    values (#{consignId,jdbcType=VARCHAR}, #{consignNo,jdbcType=VARCHAR}, #{camount,jdbcType=INTEGER}, 
+      #{locationTo,jdbcType=VARCHAR}, #{receiveOrgId,jdbcType=VARCHAR}, #{receiveOrgName,jdbcType=VARCHAR}, 
+      #{consignFsate,jdbcType=VARCHAR}, #{consignOrgId,jdbcType=VARCHAR}, #{consignOrgName,jdbcType=VARCHAR}, 
+      #{locationFrom,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=VARCHAR}, #{modifyUserId,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.trans.entity.Consign" >
+    insert into tb_consign
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="consignId != null" >
+        CONSIGN_ID,
+      </if>
+      <if test="consignNo != null" >
+        CONSIGN_NO,
+      </if>
+      <if test="camount != null" >
+        CAMOUNT,
+      </if>
+      <if test="locationTo != null" >
+        LOCATION_TO,
+      </if>
+      <if test="receiveOrgId != null" >
+        RECEIVE_ORG_ID,
+      </if>
+      <if test="receiveOrgName != null" >
+        RECEIVE_ORG_NAME,
+      </if>
+      <if test="consignFsate != null" >
+        CONSIGN_FSATE,
+      </if>
+      <if test="consignOrgId != null" >
+        CONSIGN_ORG_ID,
+      </if>
+      <if test="consignOrgName != null" >
+        CONSIGN_ORG_NAME,
+      </if>
+      <if test="locationFrom != null" >
+        LOCATION_FROM,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="modifyUserId != null" >
+        MODIFY_USER_ID,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="consignId != null" >
+        #{consignId,jdbcType=VARCHAR},
+      </if>
+      <if test="consignNo != null" >
+        #{consignNo,jdbcType=VARCHAR},
+      </if>
+      <if test="camount != null" >
+        #{camount,jdbcType=INTEGER},
+      </if>
+      <if test="locationTo != null" >
+        #{locationTo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveOrgId != null" >
+        #{receiveOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveOrgName != null" >
+        #{receiveOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="consignFsate != null" >
+        #{consignFsate,jdbcType=VARCHAR},
+      </if>
+      <if test="consignOrgId != null" >
+        #{consignOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="consignOrgName != null" >
+        #{consignOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="locationFrom != null" >
+        #{locationFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

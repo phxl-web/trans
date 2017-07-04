@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.trans.dao.ConsignDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.ConsignDetail" >
+    <result column="CONSIGN_DETAIL_ID" property="consignDetailId" jdbcType="VARCHAR" />
+    <result column="CONSIGN_ID" property="consignId" jdbcType="VARCHAR" />
+    <result column="CAR_BRAND" property="carBrand" jdbcType="VARCHAR" />
+    <result column="CAR_MODEL" property="carModel" jdbcType="VARCHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="INTEGER" />
+    <result column="CHASSIS_NO" property="chassisNo" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="DATE" />
+    <result column="DESPATCH_PLAN_ID" property="despatchPlanId" jdbcType="VARCHAR" />
+    <result column="DESPATCH_FSTATE" property="despatchFstate" jdbcType="VARCHAR" />
+    <result column="DESPATCH_DATE" property="despatchDate" jdbcType="DATE" />
+  </resultMap>
+   <insert id="importConsignDetails" >
+    insert into tb_consign_detail (CONSIGN_DETAIL_ID,CONSIGN_ID, CAR_BRAND, CAR_MODEL, 
+      AMOUNT, CHASSIS_NO, 
+      MODIFY_DATE,DESPATCH_FSTATE)
+     select cd.* from
+    <foreach collection="list" index="index" open="(" close=")" separator="union"> 
+    select replace(uuid(),'-',''),#{list[${index}].consignId,jdbcType=VARCHAR}, #{list[${index}].carBrand,jdbcType=VARCHAR},#{list[${index}].carModel,jdbcType=VARCHAR}, 
+      #{list[${index}].amount,jdbcType=INTEGER}, #{list[${index}].chassisNo,jdbcType=VARCHAR}, 
+     now(),'00'
+     from dual
+     </foreach> cd
+  </insert>
+  
+  <update id="batchUpdatePlan">
+      update tb_consign_detail 
+      set DESPATCH_PLAN_ID = #{despatchPlanId, jdbcType=VARCHAR},
+      DESPATCH_FSTATE = '01',
+      DESPATCH_DATE = now()
+      where CONSIGN_DETAIL_ID in 
+      <foreach collection="consignDetailIds" item="consignDetail" index="index" open="(" close=")" separator=",">
+				#{consignDetail, jdbcType=VARCHAR}
+	  </foreach>
+  </update>
+  
+  <delete id="batchDeleteByIds">
+      delete from tb_consign_detail
+      where CONSIGN_DETAIL_ID in 
+      <foreach collection="consignDetailIds" item="consignDetail" index="index" open="(" close=")" separator=",">
+				#{consignDetail, jdbcType=VARCHAR}
+	  </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.erp.trans.entity.ConsignDetail" >
+    insert into tb_consign_detail (CONSIGN_DETAIL_ID, CAR_BRAND, CAR_MODEL, 
+      AMOUNT, CHASSIS_NO, MODIFY_USER_ID, 
+      MODIFY_DATE)
+    values (#{consignDetailId,jdbcType=VARCHAR}, #{carBrand,jdbcType=VARCHAR}, #{carModel,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=INTEGER}, #{chassisNo,jdbcType=VARCHAR}, #{modifyUserId,jdbcType=VARCHAR}, 
+      #{modifyDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.trans.entity.ConsignDetail" >
+    insert into tb_consign_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="consignDetailId != null" >
+        CONSIGN_DETAIL_ID,
+      </if>
+      <if test="carBrand != null" >
+        CAR_BRAND,
+      </if>
+      <if test="carModel != null" >
+        CAR_MODEL,
+      </if>
+      <if test="amount != null" >
+        AMOUNT,
+      </if>
+      <if test="chassisNo != null" >
+        CHASSIS_NO,
+      </if>
+      <if test="modifyUserId != null" >
+        MODIFY_USER_ID,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="consignDetailId != null" >
+        #{consignDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="carBrand != null" >
+        #{carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="carModel != null" >
+        #{carModel,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="chassisNo != null" >
+        #{chassisNo,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+</mapper>

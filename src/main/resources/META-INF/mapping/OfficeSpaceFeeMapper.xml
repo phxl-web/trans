@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.trans.dao.OfficeSpaceFeeMapper">
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.OfficeSpaceFee">
+    <result column="OFFICE_SPACE_ID" jdbcType="VARCHAR" property="officeSpaceId" />
+    <result column="OFFICE_SPACE_NAME" jdbcType="VARCHAR" property="officeSpaceName" />
+    <result column="MONTH_RENT" jdbcType="DECIMAL" property="monthRent" />
+    <result column="LEASE" jdbcType="VARCHAR" property="lease" />
+    <result column="MODIFY_DATE" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="MODIFY_USERID" jdbcType="VARCHAR" property="modifyUserid" />
+    <result column="ORG_ID" jdbcType="VARCHAR" property="orgId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.erp.trans.entity.OfficeSpaceFee">
+    insert into TB_OFFICE_SPACE_FEE (OFFICE_SPACE_ID, OFFICE_SPACE_NAME, MONTH_RENT, 
+      LEASE, MODIFY_DATE, MODIFY_USERID, 
+      ORG_ID)
+    values (#{officeSpaceId,jdbcType=VARCHAR}, #{officeSpaceName,jdbcType=VARCHAR}, #{monthRent,jdbcType=DECIMAL}, 
+      #{lease,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUserid,jdbcType=VARCHAR}, 
+      #{orgId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.trans.entity.OfficeSpaceFee">
+    insert into TB_OFFICE_SPACE_FEE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="officeSpaceId != null">
+        OFFICE_SPACE_ID,
+      </if>
+      <if test="officeSpaceName != null">
+        OFFICE_SPACE_NAME,
+      </if>
+      <if test="monthRent != null">
+        MONTH_RENT,
+      </if>
+      <if test="lease != null">
+        LEASE,
+      </if>
+      <if test="modifyDate != null">
+        MODIFY_DATE,
+      </if>
+      <if test="modifyUserid != null">
+        MODIFY_USERID,
+      </if>
+      <if test="orgId != null">
+        ORG_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="officeSpaceId != null">
+        #{officeSpaceId,jdbcType=VARCHAR},
+      </if>
+      <if test="officeSpaceName != null">
+        #{officeSpaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="monthRent != null">
+        #{monthRent,jdbcType=DECIMAL},
+      </if>
+      <if test="lease != null">
+        #{lease,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserid != null">
+        #{modifyUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.trans.dao.DesplanConnoMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.trans.entity.DesplanConno" >
+    <result column="CONSIGN_NO" property="consignNo" jdbcType="VARCHAR" />
+    <result column="DESPATCH_PLAN_ID" property="despatchPlanId" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="isWithCarrier" resultType="string">
+		SELECT cnos.cno withCarrierNos
+		FROM (
+			<foreach collection="consignNos" item="consignNo" index="index" open=" " close=" " separator="UNION">
+				select #{consignNos[${index}], jdbcType=VARCHAR} cno FROM dual
+	    	</foreach>
+		  ) cnos
+		left JOIN tb_desplan_conno on tb_desplan_conno.consign_no=cnos.cno
+		WHERE tb_desplan_conno.consign_no is  not null
+	</select>
+	<delete id="batchDeleteByCnos">
+	    delete from tb_desplan_conno
+	    where consign_no in
+	     <foreach collection="consignNos" item="consignNo" index="index" open="(" close=")" separator=",">
+				#{consignNo, jdbcType=VARCHAR}
+	 	 </foreach>
+	</delete>
+	
+	<insert id="batchInsertByCnos">
+		insert into tb_desplan_conno (CONSIGN_NO, DESPATCH_PLAN_ID)
+		SELECT cnos.*
+		FROM (
+			<foreach collection="consignNos" item="consignNo" index="index" open=" " close=" " separator="UNION">
+				select #{consignNo, jdbcType=VARCHAR} cno,#{despatchPlanId, jdbcType=VARCHAR} FROM dual
+	    	</foreach>
+		  ) cnos
+	</insert>
+	
+  <insert id="insert" parameterType="com.erp.trans.entity.DesplanConno" >
+    insert into tb_desplan_conno (CONSIGN_NO, DESPATCH_PLAN_ID)
+    values (#{consignNo,jdbcType=VARCHAR}, #{despatchPlanId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.trans.entity.DesplanConno" >
+    insert into tb_desplan_conno
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="consignNo != null" >
+        CONSIGN_NO,
+      </if>
+      <if test="despatchPlanId != null" >
+        DESPATCH_PLAN_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="consignNo != null" >
+        #{consignNo,jdbcType=VARCHAR},
+      </if>
+      <if test="despatchPlanId != null" >
+        #{despatchPlanId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
