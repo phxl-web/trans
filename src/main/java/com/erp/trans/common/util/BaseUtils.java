@@ -14,9 +14,6 @@ import java.util.Arrays;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.Assert;
 
-import com.erp.trans.common.exception.PhxlException;
-import com.erp.trans.common.exception.YsynetException;
-
 /** 
  * 基本工具方法类
  * @Date:     2015年9月23日 下午3:53:24
@@ -57,33 +54,6 @@ public class BaseUtils {
 	 */
 	public static String getRootCauseMsg(Exception e){
 		return getRootCause(e).getMessage();
-	}
-	
-	/**
-	 * 从异常堆栈中追朔根本原因（消息）
-	 *
-	 * @date: 2016年8月29日 上午10:22:16
-	 *
-	 * @param e
-	 * @return String
-	 */
-	public static String getRootCauseWithMsg(Exception e){
-		Throwable cause = getRootCause(e);
-		StringBuffer exceptionName = new StringBuffer("[");
-		if(cause instanceof YsynetException){
-			YsynetException ysynetException = (YsynetException)cause;
-			String nestedException = ysynetException.getNestedException();
-			exceptionName.append(cause.getClass().getSimpleName());
-			if(StringUtils.isNotBlank(nestedException)){
-				exceptionName.append("[").append(nestedException).append("]");
-			}
-		}else if(cause instanceof PhxlException){
-			exceptionName.append(cause.getClass().getSimpleName());
-		}else{
-			exceptionName.append(cause.getClass().getCanonicalName());
-		}
-		exceptionName.append("]");
-		return exceptionName.toString()+cause.getMessage();
 	}
 	
 	/**

@@ -7,7 +7,7 @@ package com.erp.trans.common.exception;
  * @version 1.0
  * @since JDK 1.6
  */
-public class SecurityCtrlException  extends PhxlException{
+public class SecurityCtrlException  extends BaseException{
 
 	public SecurityCtrlException() {
 		super();

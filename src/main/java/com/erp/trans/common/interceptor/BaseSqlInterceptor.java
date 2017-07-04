@@ -58,7 +58,7 @@ public class BaseSqlInterceptor implements Interceptor {
 	private static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY = new DefaultObjectWrapperFactory();
 	private static final String baseNamespace = "com.erp.trans.common.dao.BaseMapper";
 	private static String allowSqlId = BaseSqlInterceptor.baseNamespace + "[^\\s]*";//需要处理的sql
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");//查询时间格式
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//查询时间格式
 	
 	public Object intercept(Invocation invocation) throws Throwable {
 		//上送请求拦截
@@ -389,8 +389,8 @@ public class BaseSqlInterceptor implements Interceptor {
 							c.add(Calendar.DAY_OF_MONTH, 1);
 							String tomDateString = sdf.format(c.getTime());
 							
-							stringBuffer.append(couplet + rm.getColumn() + ">= TO_DATE('" + dateString + "', 'yyyy/MM/dd') AND "
-													+ rm.getColumn() + "< TO_DATE('" + tomDateString + "', 'yyyy/MM/dd')");
+							stringBuffer.append(couplet + rm.getColumn() + ">= str_to_date('" + dateString + "', '%Y-%m-%d') AND "
+													+ rm.getColumn() + "< str_to_date('" + tomDateString + "', '%Y-%m-%d')");
 						}else if(value instanceof Number){
 							String link = "";
 							if(StringUtils.isNotBlank(queryType)){
@@ -479,8 +479,8 @@ public class BaseSqlInterceptor implements Interceptor {
 					fields.append(sym + rm.getColumn());
 					
 					if(value instanceof Date){
-						String dateString = DateUtils.DateToStr((Date)value, "yyyy/MM/dd HH:mm:ss");
-						parameter.append(sym + "TO_DATE('" + dateString + "', 'yyyy/MM/dd hh24:mi:ss')");
+						String dateString = DateUtils.DateToStr((Date)value, "yyyy-MM-dd HH:mm:ss");
+						parameter.append(sym + "str_to_date('" + dateString + "', '%Y-%m-%d %T')");
 					}else if(value instanceof Number){
 						parameter.append(sym + value);
 					}else if(value instanceof String){
@@ -525,8 +525,8 @@ public class BaseSqlInterceptor implements Interceptor {
 				}
 				
 				if(value instanceof Date){
-					String dateString = DateUtils.DateToStr((Date)value, "yyyy/MM/dd HH:mm:ss");
-					keys.append(sym + irm.getColumn() + " = TO_DATE('" + dateString + "', 'yyyy/MM/dd hh24:mi:ss')");
+					String dateString = DateUtils.DateToStr((Date)value, "yyyy-MM-dd HH:mm:ss");
+					keys.append(sym + irm.getColumn() + " = str_to_date('" + dateString + "', '%Y-%m-%d %T')");
 				}else if(value instanceof Number){
 					keys.append(sym + irm.getColumn() + " = " + value);
 				}else if(value instanceof String){
@@ -551,8 +551,8 @@ public class BaseSqlInterceptor implements Interceptor {
 						fields.append(sym + rm.getColumn() + " = ");
 						
 						if(value instanceof Date){
-							String dateString = DateUtils.DateToStr((Date)value, "yyyy/MM/dd HH:mm:ss");
-							fields.append("TO_DATE('" + dateString + "', 'yyyy/MM/dd hh24:mi:ss')");
+							String dateString = DateUtils.DateToStr((Date)value, "yyyy-MM-dd HH:mm:ss");
+							fields.append("str_to_date('" + dateString + "', '%Y-%m-%d %T')");
 						}else if(value instanceof Number){
 							fields.append(value);
 						}else if(value instanceof String){
@@ -576,8 +576,8 @@ public class BaseSqlInterceptor implements Interceptor {
 						fields.append("''");
 					}else{
 						if(value instanceof Date){
-							String dateString = DateUtils.DateToStr((Date)value, "yyyy/MM/dd HH:mm:ss");
-							fields.append("TO_DATE('" + dateString + "', 'yyyy/MM/dd hh24:mi:ss')");
+							String dateString = DateUtils.DateToStr((Date)value, "yyyy-MM-dd HH:mm:ss");
+							fields.append("str_to_date('" + dateString + "', '%Y-%m-%d %T')");
 						}else if(value instanceof Number){
 							fields.append(value);
 						}else if(value instanceof String){
@@ -629,8 +629,8 @@ public class BaseSqlInterceptor implements Interceptor {
 						c.add(Calendar.DAY_OF_MONTH, 1);
 						String tomDateString = sdf.format(c.getTime());
 						
-						keys.append(couplet + rm.getColumn() + ">= TO_DATE('" + dateString + "', 'yyyy/MM/dd') AND "
-												+ rm.getColumn() + "< TO_DATE('" + tomDateString + "', 'yyyy/MM/dd')");
+						keys.append(couplet + rm.getColumn() + ">= str_to_date('" + dateString + "', 'yyyy-MM-dd') AND "
+												+ rm.getColumn() + "< str_to_date('" + tomDateString + "', '%Y-%m-%d')");
 					}else if(value instanceof Number){
 						keys.append(couplet + rm.getColumn() + " = " + value);
 					}else if(value instanceof String){

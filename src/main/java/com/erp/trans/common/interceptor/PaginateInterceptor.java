@@ -67,10 +67,10 @@ public class PaginateInterceptor implements Interceptor{
 	private static final Log logger	= LogFactory.getLog(PaginateInterceptor.class);
 	private static final ObjectFactory DEFAULT_OBJECT_FACTORY = new DefaultObjectFactory();
 	private static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY = new DefaultObjectWrapperFactory();
-	private static String pageSqlId	= "com\\.phxl\\..+";//需要拦截的ID(正则匹配):拦截医商去项目开发的dao~mapper
+	private static String pageSqlId	= "com\\.erp\\..+";//需要拦截的ID(正则匹配):拦截医商去项目开发的dao~mapper
 	private static final String baseNamespace = "com.erp.trans.common.dao.BaseMapper";
 	private static String allowSqlId = PaginateInterceptor.baseNamespace + "[^\\s]*";//需要处理的sql
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
@@ -154,8 +154,8 @@ public class PaginateInterceptor implements Interceptor{
 										c.add(Calendar.DAY_OF_MONTH, 1);
 										String tomDateString = sdf.format(c.getTime());
 										
-										stringBuffer.append(couplet + mp.getColumn() + ">= TO_DATE('" + dateString + "', 'yyyy/MM/dd') AND "
-																+ mp.getColumn() + "< TO_DATE('" + tomDateString + "', 'yyyy/MM/dd')");
+										stringBuffer.append(couplet + mp.getColumn() + ">= str_to_date('" + dateString + "', '%Y-%m-%d') AND "
+																+ mp.getColumn() + "< str_to_date('" + tomDateString + "', '%Y-%m-%d')");
 									}else if(value instanceof Number){
 										String link = "";
 										if(StringUtils.isNotBlank(queryType)){
@@ -471,6 +471,7 @@ public class PaginateInterceptor implements Interceptor{
 		StringBuilder pageSql = new StringBuilder(100);
 		Integer startIndex = page.getStartIndex();// 开始行索引
 		Integer endIndex = page.getEndIndex();// 结束行索引
+		Integer pageSize = page.getPageSize();
 		Assert.notNull(startIndex, "必需指定‘开始行索引’！");
 		Assert.notNull(endIndex, "必需指定‘结束行索引’！");
 
@@ -478,15 +479,15 @@ public class PaginateInterceptor implements Interceptor{
 		case SystemConst.PaginationMode.MODE_1:
 			pageSql.append("SELECT TTT_.* FROM ( SELECT TT_.*, ROWNUM RN FROM(");
 			pageSql.append(sql);
-			pageSql.append(") TT_ WHERE ROWNUM <= ").append(endIndex)
-			   .append(") TTT_ WHERE RN >= ").append(startIndex);
-			break;
-		default:
-			pageSql.append("SELECT TTT_.* FROM ( SELECT TT_.*, ROWNUM RN FROM(");
-			pageSql.append(sql);
 			pageSql.append(") TT_ ) TTT_ WHERE RN >= ").append(startIndex);
 			pageSql.append(" AND RN <= ").append(endIndex);
 			break;
+		default:
+			pageSql.append("SELECT TT_.* FROM(");
+			pageSql.append(sql);
+			pageSql.append(") TT_ LIMIT ").append(startIndex-1)
+			   .append(",").append(pageSize);
+			break;		
 		}
 		
 		return pageSql;

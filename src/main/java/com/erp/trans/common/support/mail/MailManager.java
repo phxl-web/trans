@@ -25,9 +25,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-import com.erp.trans.common.exception.PhxlException;
+import com.erp.trans.common.exception.BaseException;
 import com.erp.trans.common.exception.ValidationException;
-import com.erp.trans.common.util.BaseUtils;
 import com.erp.trans.common.util.JSONUtils;
 
 /**
@@ -50,7 +49,7 @@ public class MailManager {
 	 * @return	void
 	 * @throws	PhxlException 
 	 */
-	public void send(Mail mail) throws PhxlException {
+	public void send(Mail mail) throws BaseException {
 		long currentTime = System.currentTimeMillis();
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -134,8 +133,8 @@ public class MailManager {
 			}
 		} catch(Exception e){
 			logger.error("邮件发送失败! mail="+JSONUtils.toJsonLoosely(mail), e);
-			String errorMsg = "邮件发送异常: " + BaseUtils.getRootCauseWithMsg(e);
-			throw new PhxlException(errorMsg.length()>200 ? errorMsg.substring(0, 200) : errorMsg);
+			String errorMsg = "邮件发送异常: " + e.getMessage();
+			throw new BaseException(errorMsg.length()>200 ? errorMsg.substring(0, 200) : errorMsg);
 		}
 	}
 

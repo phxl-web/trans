@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -158,5 +159,16 @@ public class JSONUtils {
 		}
 		return obj.toString();
 	}
+	
+	/**   
+     * 获取泛型的Collection Type  
+     * @param collectionClass 泛型的Collection   
+     * @param elementClasses 元素类   
+     * @return JavaType Java类型   
+     * @since 1.0   
+     */   
+	public static JavaType getCollectionType(Class<?> collectionClass, Class<?>... elementClasses) {   
+	     return objectMapper.getTypeFactory().constructParametricType(collectionClass, elementClasses);   
+	}   
 	
 }

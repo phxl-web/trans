@@ -7,7 +7,7 @@ package com.erp.trans.common.exception;
  * @version 1.0
  * @since JDK 1.6
  */
-public class FtpClientException extends PhxlException {
+public class FtpClientException extends BaseException {
 
 	public FtpClientException() {
 		super();
