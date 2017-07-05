@@ -1,0 +1,29 @@
+{	
+  "total":1,
+	"rows":[{
+      "id": 1,
+      "name": "叶雨晨",
+      "baseSalary": 2000,
+      "pv": 3000,
+      "achievements": 1500,
+      "trafficCost": 500,
+      "seniorityWage": 400
+    } , {
+      "id": 2,
+      "name": "高凤娇",
+      "baseSalary": 2000,
+      "pv": 3000,
+      "achievements": 1500,
+      "trafficCost": 500,
+      "seniorityWage": 400
+    } , {
+      "id": 3,
+      "name": "陶悠",
+      "baseSalary": 2000,
+      "pv": 3000,
+      "achievements": 1500,
+      "trafficCost": 500,
+      "seniorityWage": 400
+    } 
+  ]
+}

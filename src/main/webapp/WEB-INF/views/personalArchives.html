@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../lib/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/material/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../src/style/app.css">
+    <title>人事档案</title>
+</head>
+<body>
+  <!-- 查询表单开始 -->
+  <form id="ff" class='row vForm'>  
+      <div class="col-md-3 vForm-item">  
+        <label for="name1">姓名:</label>  
+        <input class="easyui-validatebox" type="text" name="pName" />  
+      </div>    
+      <div class="col-md-2 vForm-item text-align-left">   
+        <a id="search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>     
+      </div>  
+  </form>  
+  <!-- 查询表单结束 -->
+
+  <!-- 表格开始 -->
+  <div style='padding: 8px'>
+    <table id="personalGrid" class="easyui-datagrid"></table>
+  </div>  
+  <!-- 表格结束 -->
+  <!-- 编板弹出框开始 -->
+  <div id="personalDialog">
+    <form id="personalFf" class='row vForm'>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="pName">姓名:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="pName" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="pGender">性别:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="pGender" />  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="pEmergencyPhone">电话号码:</label>  
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="pEmergencyPhone" />  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="pBirthdate">出生日期:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">   
+       <input type="text" name="pBirthdate" class="Wdate"  
+        onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,maxDate:'\'2030-10-01\'}'})"/>
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="pIdno">身份证号:</label>    
+      </div>   
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="pIdno" />  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name5">家庭住址:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">    
+        <input class="easyui-validatebox" type="text" name="pHomeAddress" />  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name6">紧急联系人电话:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="name7" />  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="pBankCard">银行卡号:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="pBankCard" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="remark">备注:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="remark" />  
+      </div> 
+    </form>  
+  </div>
+  <!-- 编板弹出框结束 -->
+
+<script type="text/javascript" src="../../lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../lib/easyui/jquery.easyui.min.js"></script>   
+<script type="text/javascript" src="../../lib/easyui/easyui-lang-zh_CN.js"></script>  
+<script type="text/javascript" src="../../lib/My97datePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="/dist/js/personalArchives.js"></script></body>
+</html>

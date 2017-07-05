@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="../../lib/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/normalize.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/material/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/icon.css">
+  <link rel="stylesheet" type="text/css" href="../../src/style/app.css">
+  <title>承运商结费</title>
+</head>
+<body>
+  <!-- 查询表单开始 -->
+  <form id="ff" class='row vForm'>  
+      <div class="col-md-3 vForm-item">  
+        <label for="carrierName">承运商:</label>  
+        <input class="easyui-validatebox" type="text" name="carrierName" />  
+      </div>  
+      <div class="col-md-3 vForm-item">  
+        <label for="transportTool">轿运车:</label>  
+        <input class="easyui-validatebox" type="text" name="transportTool" />  
+      </div>  
+      <div class="col-md-6 vForm-item">  
+        <label for="startDate">发运日期:</label>  
+          <input type="text" name="starDate" id="starDate" class="Wdate"  
+        onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,maxDate:'#F{$dp.$D(\'endDate\')||\'2030-10-01\'}'})"/>  
+        至
+        <input type="text" name="endDate" id="endDate" class="Wdate" 
+        onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,minDate:'#F{$dp.$D(\'starDate\')}',maxDate:'2030-10-01'})"//>
+      
+        <span>
+          <a id="search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>  
+          <a id="export" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'">导出</a>  
+          <a id="check" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">对账</a>
+        </span> 
+      </div>  
+  </form>  
+  <!-- 查询表单结束 -->
+  <!-- grid开始 -->
+  <div style='padding: 8px'>
+    <table id="cysChargeGrid" class="easyui-datagrid"></table>
+  </div> 
+  <!-- grid结束 --> 
+    <!-- 编辑弹出框开始 -->
+  <div id="editWin">
+    <form id="editForm" class='row vForm'>  
+      <input type="hidden" name="id"/>
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="consignNo">运单号:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input data-readonly='true' data-options="required:true" class="easyui-validatebox" type="text" name="consignNo" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="subsidy">补贴:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="subsidy" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="qualityLoss">质损费:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="qualityLoss" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="misCosts">杂项扣款:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="misCosts" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="gpsPayment">GPS扣款:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="gpsPayment" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="reverseCharge">倒板费:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="reverseCharge" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="advances">预付款:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="advances" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="repaidOilCard">预付油卡:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="repaidOilCard" />  
+      </div> 
+    </form>  
+  </div>
+  <!-- 编辑弹出框结束 -->
+<script type="text/javascript" src="../../lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../lib/easyui/jquery.easyui.min.js"></script>   
+<script type="text/javascript" src="../../lib/easyui/easyui-lang-zh_CN.js"></script> 
+<script type="text/javascript" src="../../lib/My97datePicker/WdatePicker.js"></script>   
+<script type="text/javascript" src="/dist/js/cysCharge.js"></script></body>
+</html>

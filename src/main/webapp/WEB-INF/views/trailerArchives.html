@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../lib/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/material/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../src/style/app.css">
+    <title>轿运车档案</title>
+</head>
+<body>
+  <!-- 查询表单开始 -->
+  <form id="ff" class='row vForm'>  
+      <div class="col-md-3 vForm-item">  
+        <label for="trailerNo">挂车号:</label>  
+        <input class="easyui-validatebox" type="text" name="trailerNo" />  
+      </div>  
+      <div class="col-md-3 vForm-item">  
+        <label for="transportTool">轿运车:</label>  
+        <input class="easyui-validatebox" type="text" name="transportTool" />  
+      </div>  
+      <div class="col-md-3 vForm-item">  
+        <label for="mainDrive">主驾:</label>  
+        <input class="easyui-validatebox" type="text" name="mainDrive" /> 
+      </div>  
+      <div class="col-md-3 vForm-item">  
+        <label for="coPilot">副驾:</label>  
+        <input class="easyui-validatebox" type="text" name="coPilot" /> 
+      </div>  
+      <div class="col-md-3 vForm-item">  
+        <label for="carrierName">承运商:</label>  
+        <input class="easyui-validatebox" type="text" name="carrierName" /> 
+      </div>  
+      <div class="col-md-6 vForm-item">  
+        <label for="name3">合同日期:</label>  
+        <input type="text" name="name3" id="starDate" class="Wdate"  
+        onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,maxDate:'#F{$dp.$D(\'endDate\')||\'2030-10-01\'}'})"/>  
+        至
+        <input type="text" name="name4" id="endDate" class="Wdate" 
+        onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,minDate:'#F{$dp.$D(\'starDate\')}',maxDate:'2030-10-01'})"//>
+      </div>   
+      <div class="col-md-2 vForm-item text-align-left">   
+        <a id="search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>     
+      </div>  
+  </form>  
+  <!-- 查询表单结束 -->
+
+  <!-- 表格开始 -->
+  <div style='padding: 8px'>
+    <table id="trailerGrid" class="easyui-datagrid"></table>
+  </div>  
+  <!-- 表格结束 -->
+  <!-- 新增/编辑弹出框开始 -->
+  <div id="trailerDialog">
+    <form id="trailerFf" class='row vForm'>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="transportTool">轿运车:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="transportTool" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="trailerNo">挂车号:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="trailerNo" />  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="loadAmount">核载:</label>  
+      </div> 
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="loadAmount" />  
+      </div>   
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="carrierName">承运商:</label>  
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="carrierName" />  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="mainDrive">主驾:</label>    
+      </div>   
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="mainDrive" />  
+      </div>  
+       <div class="col-md-2 vForm-item form-label">  
+        <label for="mainDrivePhone">联系电话:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="mainDrivePhone" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="coPilot">副驾:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">    
+        <input class="easyui-validatebox" type="text" name="coPilotPhone" />  
+      </div>  
+       <div class="col-md-2 vForm-item form-label">  
+        <label for="coPilotPhone">联系电话:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="mainDrivePhone" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name8">档案开始日期:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input type="text" name="name8" class="Wdate"  
+        onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,maxDate:'\'2030-10-01\'}'})"/> 
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name9">档案结束日期:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input type="text" name="name9" class="Wdate"  
+        onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,maxDate:'\'2030-10-01\'}'})"/>  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="registerDate">注册时间:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+       <input type="text" name="registerDate" class="Wdate"  
+        onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,maxDate:'\'2030-10-01\'}'})"/> 
+      </div>
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="insuranceDate">投保时间:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input type="text" name="insuranceDate"  class="Wdate"  
+        onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,maxDate:'\'2030-10-01\'}'})"/> 
+      </div>
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="repaymentDay">还款日:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input type="text" name="repaymentDay" class="Wdate"  
+        onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,maxDate:'\'2030-10-01\'}'})"/> 
+      </div>
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="repaymentAmount">还款金额:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="repaymentAmount" />  
+      </div>
+    </form>  
+  </div>
+  <!-- 编板弹出框结束 -->
+
+<script type="text/javascript" src="../../lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../lib/easyui/jquery.easyui.min.js"></script>   
+<script type="text/javascript" src="../../lib/easyui/easyui-lang-zh_CN.js"></script>  
+<script type="text/javascript" src="../../lib/My97datePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="/dist/js/trailerArchives.js"></script></body>
+</html>

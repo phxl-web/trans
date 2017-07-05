@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>办公场地</title>
+  <link rel="stylesheet" type="text/css" href="../../lib/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/normalize.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/material/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/icon.css">
+  <link rel="stylesheet" type="text/css" href="../../src/style/app.css">
+</head>
+<body>
+  <!-- 查询表单开始 -->
+  <div id="ff" class='row vForm'>  
+    <div class="col-md-6 vForm-item">  
+      <label for="officeSpaceName">场地名称:</label>  
+      <input class="easyui-validatebox" type="text" name="officeSpaceName" />  
+      <a id="search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>  
+    </div>  
+  </div>
+  <!-- 表格开始 -->
+  <div style='padding: 8px'>
+    <table id="officeGrid" class="easyui-datagrid"></table>
+  </div>  
+
+  
+  <!-- 编板弹出框开始 -->
+  <div id="officeDialog">
+    <form id="officeFf" class='row vForm'>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="officeSpaceName">场地名称:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="officeSpaceName" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="monthRent">月租:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="monthRent" />  
+      </div>   
+    </form>  
+  </div>
+  <!-- 编板弹出框结束 --> 
+<script type="text/javascript" src="../../lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../lib/easyui/jquery.easyui.min.js"></script>   
+<script type="text/javascript" src="../../lib/easyui/easyui-lang-zh_CN.js"></script>    
+<script type="text/javascript" src="/dist/js/officePlace.js"></script></body>
+</html>

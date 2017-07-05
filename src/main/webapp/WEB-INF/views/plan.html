@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../js/lib/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../js/lib/normalize.css">
+    <link rel="stylesheet" type="text/css" href="../js/lib/easyui/themes/material/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/lib/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/app.css">
+    <title>发送计划消息</title>
+</head>
+<body>
+  <!-- 查询表单开始 -->
+  <form id="ff" class='row vForm'>  
+      <div class="col-md-3 vForm-item">  
+        <label for="consignNo">运单号:</label>  
+        <input class="easyui-validatebox" type="text" name="consignNo" />  
+      </div>  
+      <div class="col-md-3 vForm-item">  
+        <label for="chassisNo">底盘号:</label>  
+        <input class="easyui-validatebox" type="text" name="chassisNo" />  
+      </div>  
+       <div class="col-md-5 vForm-item">  
+        <label for="name3">制单时间:</label>  
+        <input type="text" name="starDate" id="starDate" class="Wdate"  
+        onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,maxDate:'#F{$dp.$D(\'endDate\')||\'2030-10-01\'}'})"/>  
+        至
+        <input type="text" name="endDate" id="endDate" class="Wdate" 
+        onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,minDate:'#F{$dp.$D(\'starDate\')}',maxDate:'2030-10-01'})"//>
+      </div>   
+      <div class="col-md-3 vForm-item">  
+        <label for="locationFrom">起运地:</label>  
+        <input id="locationFrom" name="locationFrom" style="width:200px;height:28px">  
+      </div>  
+      <div class="col-md-3 vForm-item">  
+        <label for="locationTo">目的地:</label>  
+        <input id="locationTo" name="locationTo" style="width:200px;height:28px">  
+      </div>  
+      <div class="col-md-5 vForm-item">  
+        <label for="consignFsate">编板状态:</label>  
+        <select id="consignFsate" editable='false' name='consignFsate' class="easyui-combobox" name="fstate" style="width:200px;height:28px">  
+          <option value="0">全部</option>  
+          <option value="1">已编板</option>  
+          <option value="2">未编板</option>   
+        </select>  
+        <span>
+          <a id="search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>  
+          <a id="make" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">编板</a>  
+          <a id="import" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'">导入</a>
+        </span>     
+      </div>  
+  </form>  
+  <!-- 查询表单结束 -->
+
+  <!-- 表格开始 -->
+  <div style='padding: 8px'>
+    <table id="planGrid" class="easyui-datagrid"></table>
+  </div>  
+  <!-- 表格结束 -->
+  <!-- 新增/编辑弹出框开始 -->
+  <div id="planDialog">
+    <form id="planFf" class='row vForm' method='post'>  
+      <input type="hidden" name="id"/>
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="consignNo">运单号:</label>
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input data-readonly="true" class="easyui-validatebox" name="consignNo" data-options="required:true,validType:['number','minLength[3]']">  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="chassisNo">底盘号:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input data-readonly="true" name="chassisNo" data-options="required:true" class="easyui-validatebox">  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="locationFromCombobox">起运地:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input data-readonly="true" id="locationFromCombobox" name="locationFromCombobox" style="width: 200px;height:28px;" data-options="required:true">  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="locationToCombobox">目的地:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input data-readonly="true" id="locationToCombobox" name="locationToCombobox" style="width: 200px;height:28px;" data-options="required:true">  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="carBrand">品牌:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input name="carBrand" id='carBrand' style="width: 200px;height:28px;" data-options="required:true">  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="carModel">车型:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input id="carModel" name="carModel" style="width: 200px;height:28px;" data-options="required:true">  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="consignOrgName">托运单位:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input name="consignOrgName" data-options="required:true" class="easyui-validatebox">  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="receiveOrgName">收车单位:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input name="receiveOrgName" data-options="required:true" class="easyui-validatebox">  
+      </div> 
+    </form>  
+  </div>
+  <!-- 新增/编辑弹出框结束 -->
+  <!-- 编板弹出框开始 -->
+  <div id="bbDialog">
+    <form id="bbFf" class='row vForm' method='post'>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name1">承运商:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input  name="name1" data-options="required:true" id="bbCys">  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name2">轿运车:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input name="name2" data-options="required:true"  id="bbJyc">  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name3">主驾驶:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input name="name3"  data-options="required:true" id="bbZjs" class="easyui-validatebox">  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name4">联系方法:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input  name="name4" data-options="required:true" id="bbLxff" class="easyui-validatebox">  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name5">所带运单:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item"> 
+        <input name="name5"  style="width: 200px" data-options="required:true" id="bbYd">  
+      </div> 
+    </form>  
+  </div>
+  <!-- 编板弹出框结束 -->
+
+<script type="text/javascript" src="../js/lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../js/lib/easyui/jquery.easyui.min.js"></script>   
+<script type="text/javascript" src="../js/lib/easyui/easyui-lang-zh_CN.js"></script>  
+<script type="text/javascript" src="../js/lib/My97datePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="../js/plan.js"></script></body>
+</html>

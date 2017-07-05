@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../lib/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/material/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../src/style/app.css">
+    <title>收入合同</title>
+</head>
+<body>
+  <!-- 查询表单开始 -->
+  <form id="ff" class='vForm'>  
+      <div class="row">
+        <div class="col-md-3 vForm-item">  
+          <label for="locationFrom">起运地:</label>  
+          <input id="locationFrom" name="locationFrom" style="width:200px;height:28px">  
+        </div>  
+        <div class="col-md-3 vForm-item">  
+          <label for="locationTo">目的地:</label>  
+          <input id="locationTo" name="locationTo" style="width:200px;height:28px">  
+        </div>
+         <div class="col-md-5 vForm-item">  
+          <label for="name3">合同日期:</label>  
+          <input type="text" name="name3" id="starDate" class="Wdate"  
+          onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,maxDate:'#F{$dp.$D(\'endDate\')||\'2030-10-01\'}'})"/>  
+          至
+          <input type="text" name="name4" id="endDate" class="Wdate" 
+          onFocus="WdatePicker({isShowClear:false,isShowToday:false,isShowOK:false,readOnly:true,minDate:'#F{$dp.$D(\'starDate\')}',maxDate:'2030-10-01'})"//>
+        </div> 
+      </div>
+      <div class="row">
+        <div class="col-md-3 vForm-item">  
+          <label for="consignOrgName">托运单位:</label>  
+          <input class="easyui-validatebox" type="text" name="consignOrgName" />  
+        </div> 
+        <div class="col-md-2 vForm-item text-align-left">   
+          <a id="search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>     
+        </div> 
+      </div>
+  </form>  
+  <!-- 查询表单结束 -->
+
+  <!-- 表格开始 -->
+  <div style='padding: 8px'>
+    <table id="incomeGrid" class="easyui-datagrid"></table>
+  </div>  
+  <!-- 表格结束 -->
+  <!-- 编板弹出框开始 -->
+  <div id="incomeDialog">
+    <form id="incomeFf" class='row vForm'>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="consignOrgName">托运单位:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="consignOrgName" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="locationFrom">起运地:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input id="locationFrom" name="locationFrom" style="width:200px;height:28px">  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="locationTo">目的地:</label>  
+      </div> 
+      <div class="col-md-4 vForm-item">  
+        <input id="locationTo" name="locationTo" style="width:200px;height:28px">  
+      </div>   
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="carBrand">品牌:</label>  
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input type="text" name="carBrand" id="carBrand"/>  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="carModel">车型:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">   
+        <input  type="text" name="carModel" id="carModel"/>  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="freightRates">运价:</label>    
+      </div>   
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="freightRates" />  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="chargeCyc">结费周期:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">    
+        <input class="easyui-validatebox" type="text" name="chargeCyc" />  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="startDate">合同开始日期:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input onClick="WdatePicker()" type="text" name="startDate" style="width: 200px"/>  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="endDate">合同结束日期:</label>    
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input onClick="WdatePicker()" type="text" name="endDate" style="width: 200px"/>  
+      </div>  
+    </form>  
+  </div>
+  <!-- 编板弹出框结束 -->
+
+<script type="text/javascript" src="../../lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../lib/easyui/jquery.easyui.min.js"></script>   
+<script type="text/javascript" src="../../lib/easyui/easyui-lang-zh_CN.js"></script> 
+<script type="text/javascript" src="../../lib/My97datePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="/dist/js/incomeContract.js"></script></body>
+</html>

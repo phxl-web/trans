@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="../../lib/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/normalize.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/material/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/icon.css">
+  <link rel="stylesheet" type="text/css" href="../../src/style/app.css">
+  <title>司机结费</title>
+</head>
+<body>
+  <!-- 查询表单开始 -->
+  <form id="ff" class='row vForm'>  
+    <div class="col-md-4 vForm-item">  
+      <label for="searchName">轿运车号:</label>  
+      <input class="easyui-validatebox" name="searchName"/>
+      <span>
+        <a id="search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>  
+      </span>     
+    </div>  
+  </form>  
+  <!-- 查询表单结束 -->
+  <!-- grid开始 -->
+  <div style='padding: 8px'>
+    <table id="sjChargeGrid" class="easyui-datagrid"></table>
+  </div> 
+  <!-- grid结束 --> 
+    <!-- 新增/编辑弹出框开始 -->
+  <div id="editWin">
+    <form id="editForm" class='row vForm'>  
+      <input type="hidden" name="id"/>
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="kiloPrice">单价:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input  data-options="required:true" class="easyui-validatebox" type="text" name="kiloPrice" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="kiloMeters">公里数:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="kiloMeters" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="oilCost1">油耗1:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="oilCost1" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="oilCost2">油耗2:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="oilCost2" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="oilCost3">油耗3:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="oilCost3" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="oilCost4">油耗4:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="oilCost4" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="oilSubsidy">油耗补贴:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="oilSubsidy" />  
+      </div> 
+    </form>  
+  </div>
+  <!-- 编辑弹出框结束 -->
+<script type="text/javascript" src="../../lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../lib/easyui/jquery.easyui.min.js"></script>   
+<script type="text/javascript" src="../../lib/easyui/easyui-lang-zh_CN.js"></script>    
+<script type="text/javascript" src="/dist/js/sjCharge.js"></script></body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>人员工资</title>
+  <link rel="stylesheet" type="text/css" href="../../lib/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/normalize.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/material/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../../lib/easyui/themes/icon.css">
+  <link rel="stylesheet" type="text/css" href="../../src/style/app.css">
+</head>
+<body>
+  <!-- 查询表单开始 -->
+  <div id="ff" class='row vForm'>  
+    <div class="col-md-6 vForm-item">  
+      <label for="name">员工姓名:</label>  
+      <input class="easyui-validatebox" type="text" name="name" />  
+      <a id="search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>  
+    </div>  
+  </div>
+  <!-- 表格开始 -->
+  <div style='padding: 8px'>
+    <table id="wagesGrid" class="easyui-datagrid"></table>
+  </div>  
+  <!-- 编板弹出框开始 -->
+  <div id="wagesDialog">
+    <form id="wagesFf" class='row vForm'>  
+      <input type='hidden' name='id'/>
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name1">姓名:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-readonly='true' type="text" name="name1" />  
+      </div> 
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name2">底薪:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" data-options="required:true" type="text" name="name2" />  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name3">岗位工资:</label>  
+      </div> 
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="name3" />  
+      </div>   
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name4">综合考评奖励:</label>  
+      </div>  
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="name4" />  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name5">交通通讯保障:</label>   
+      </div>  
+      <div class="col-md-4 vForm-item">   
+        <input class="easyui-validatebox" type="text" name="name5" />  
+      </div>  
+      <div class="col-md-2 vForm-item form-label">  
+        <label for="name6">工龄工资:</label>    
+      </div>   
+      <div class="col-md-4 vForm-item">  
+        <input class="easyui-validatebox" type="text" name="name7" />  
+      </div>  
+    </form>  
+  </div>
+  <!-- 编板弹出框结束 -->
+<script type="text/javascript" src="../../lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../lib/easyui/jquery.easyui.min.js"></script>   
+<script type="text/javascript" src="../../lib/easyui/easyui-lang-zh_CN.js"></script>    
+<script type="text/javascript" src="/dist/js/wages.js"></script></body>
+</html>

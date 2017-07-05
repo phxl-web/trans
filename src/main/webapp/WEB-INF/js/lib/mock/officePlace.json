@@ -1,0 +1,13 @@
+{	
+  "total":1,
+	"rows":[{
+      "id": 1,
+      "placeName": "江汉路步行街",
+      "monthly": 20000
+    } , {
+      "id": 2,
+      "placeName": "汉街万达",
+      "monthly": 25000
+    } 
+  ]
+}
